@@ -269,45 +269,96 @@ function checkAchievements() {
 
 // ----- Random Events -----
 const RANDOM_EVENTS = [
+  // --- Turisti e forestieri ---
   {
-    text: "Un turista chiede dove parcheggiare.",
-    optionA: { label: "Aiutalo", cassa: 0, vitalita: 3, response: "Il turista visita tre negozi e compra olio locale." },
-    optionB: { label: "Multalo!", cassa: 100, vitalita: -2, response: "Il turista se ne va. Recensione: 1 stella." },
+    text: "Un turista svizzero con la cioccolata in mano cerca parcheggio in piazza.",
+    optionA: { label: "Aiutalo", cassa: 0, vitalita: 4, response: "Il turista visita tre negozi e compra olio. 'Wunderbar!' Lascia la cioccolata a Rosso." },
+    optionB: { label: "Multalo!", cassa: 120, vitalita: -3, response: "'Me ne torno in Svizzera! Ho portato la cioccolata e m\'anu multatu!' Recensione: 1 stella." },
   },
   {
-    text: "La scuola chiede di sospendere le multe durante l'uscita.",
-    optionA: { label: "Concedi", cassa: 0, vitalita: 4, response: "Le mamme tornano a fare la spesa in centro." },
-    optionB: { label: "Rifiuta", cassa: 200, vitalita: -3, response: "Tre famiglie iscrivono i figli a Roggiano." },
+    text: "Un camper tedesco di 9 metri prova a entrare nel centro storico.",
+    optionA: { label: "Dirottalo al parcheggio", cassa: 0, vitalita: 3, response: "Il tedesco ringrazia e torna a piedi. Compra 6 bottiglie di olio Bruzio." },
+    optionB: { label: "Multa e rimozione!", cassa: 200, vitalita: -3, response: "Il camper blocca Via Roberto il Guiscardo per due ore. TripAdvisor: 'Never again.'" },
+  },
+  // --- Animali e mezzi improbabili ---
+  {
+    text: "Un asinello e' legato al palo della sosta in Piazza Selvaggi.",
+    optionA: { label: "E' folklore!", cassa: 0, vitalita: 3, response: "I turisti fanno le foto. L\'asinello diventa virale su TikTok. San Marco trending." },
+    optionB: { label: "Divieto di sosta!", cassa: 40, vitalita: -2, response: "Il vigile scrive il verbale. Intestatario: l\'asino. Rosso: 'Avete multatu pure 'u ciucciu!'" },
   },
   {
-    text: "Un corriere in doppia fila scarica pacchi per il negozio.",
-    optionA: { label: "Lascia stare", cassa: 0, vitalita: 2, response: "Il negoziante ti ringrazia con un caffe'." },
-    optionB: { label: "Verbale!", cassa: 75, vitalita: -1, response: "Il corriere non consegnera' piu' in centro." },
+    text: "Zi' Peppino attraversa la piazza cu' 'a carriola chiena di fichi.",
+    optionA: { label: "Lascialo passare", cassa: 0, vitalita: 2, response: "Ti lascia un cestino di fichi sulla scrivania. Ancora caldi di sole." },
+    optionB: { label: "Veicolo non assicurato!", cassa: 25, vitalita: -2, response: "Rosso dal bar: 'Avete multato unu cu' 'a carriola! State fuori!' Il video fa 50mila views." },
+  },
+  {
+    text: "Tre capre scendono dalla Motta e bloccano il Corso.",
+    optionA: { label: "Aspetta che passano", cassa: 0, vitalita: 3, response: "Le capre se ne vanno. Nessun danno. Un momento di pace bucolica nel caos." },
+    optionB: { label: "Multa al proprietario!", cassa: 60, vitalita: -1, response: "Il pastore: 'Ma le capre \'ndo parcheggianu?' Rosso muore dal ridere." },
+  },
+  // --- Situazioni serie ---
+  {
+    text: "La scuola chiede di sospendere le multe durante l\'uscita dei bambini.",
+    optionA: { label: "Concedi", cassa: 0, vitalita: 4, response: "Le mamme tornano a fare la spesa in centro. Il paese respira." },
+    optionB: { label: "Rifiuta", cassa: 200, vitalita: -3, response: "Tre famiglie iscrivono i figli a Roggiano. Rosso: 'Pure i bambini vi siete mangiati.'" },
+  },
+  {
+    text: "Il medico parcheggia sul marciapiede per un\'emergenza.",
+    optionA: { label: "E\' un\'emergenza", cassa: 0, vitalita: 3, response: "La signora Maria e\' salva. Il paese respira." },
+    optionB: { label: "Nessuna eccezione", cassa: 50, vitalita: -3, response: "Il medico si trasferisce a Cosenza. Rosso: 'Mo\' ppe\' morire bisogna andare a Cosenza.'" },
   },
   {
     text: "Il parroco chiede parcheggio libero per un funerale.",
-    optionA: { label: "Concedi", cassa: 0, vitalita: 5, response: "La comunita' apprezza. Qualcuno torna al bar." },
-    optionB: { label: "Regolamento!", cassa: 150, vitalita: -4, response: "I funerali si faranno a Roggiano." },
+    optionA: { label: "Concedi", cassa: 0, vitalita: 5, response: "La comunita\' apprezza. Qualcuno torna al bar." },
+    optionB: { label: "Regolamento!", cassa: 150, vitalita: -4, response: "I funerali si fanno a Roggiano. Rosso: 'Mancu i morti lasciate in pace.'" },
+  },
+  // --- Situazioni assurde ---
+  {
+    text: "Un\'anziana ha parcheggiato la sedia a rotelle sulle strisce blu.",
+    optionA: { label: "Ma figurati...", cassa: 0, vitalita: 2, response: "La signora ti benedice. Ti regala un santino di San Francesco da Paola." },
+    optionB: { label: "Regolamento!", cassa: 15, vitalita: -4, response: "Il video finisce su Striscia la Notizia. Il Gabibbo arriva a San Marco. Rosso esulta." },
   },
   {
-    text: "Il medico parcheggia sul marciapiede per un'emergenza.",
-    optionA: { label: "E' un'emergenza", cassa: 0, vitalita: 3, response: "La signora Maria e' salva. Il paese respira." },
-    optionB: { label: "Nessuna eccezione", cassa: 50, vitalita: -3, response: "Il medico si trasferisce a Cosenza." },
+    text: "Un contadino ha parcheggiato il trattore in piazza per scaricare olive.",
+    optionA: { label: "Fa\' pure", cassa: 0, vitalita: 3, response: "Ti regala 5 litri di olio nuovo. L\'odore riempie la piazza." },
+    optionB: { label: "Mezzo agricolo in ZTL!", cassa: 80, vitalita: -2, response: "Il contadino: 'L\'anno prossimo le olive le portu a Roggiano.' L\'olio Bruzio piange." },
   },
+  {
+    text: "Nonna Concetta parcheggia la Panda storta in piazza. Di nuovo. Per la terza volta oggi.",
+    optionA: { label: "Fai finta di niente", cassa: 0, vitalita: 2, response: "Ti porta le melanzane sott\'olio la prossima settimana. Nonna Concetta non dimentica." },
+    optionB: { label: "Nonna, mi dispiace...", cassa: 30, vitalita: -2, response: "'U nipote d\'u sindacu! Vergogna!' Tutto il rione lo sa entro sera." },
+  },
+  {
+    text: "Un ragazzo consegna pizze in motorino e parcheggia sul marciapiede.",
+    optionA: { label: "Lascialo lavorare", cassa: 0, vitalita: 2, response: "Ti porta una margherita gratis. Ancora calda." },
+    optionB: { label: "Verbale!", cassa: 50, vitalita: -1, response: "Nessuno consegna piu\' pizze in centro. Rosso: 'Mo\' mancu \'a pizza arriva cchiu\'.'" },
+  },
+  // --- Sagre e tradizioni ---
   {
     text: "Furgone della sagra del cinghiale in divieto di sosta.",
-    optionA: { label: "Aiuta a scaricare", cassa: -20, vitalita: 4, response: "La sagra e' un successo! Gente da tutto il circondario." },
-    optionB: { label: "Verbale!", cassa: 100, vitalita: -2, response: "La sagra e' annullata. Di nuovo." },
-  },
-  {
-    text: "Nonna Concetta parcheggia la Panda storta. Di nuovo.",
-    optionA: { label: "Fai finta di niente", cassa: 0, vitalita: 2, response: "Ti porta le melanzane sott'olio la prossima settimana." },
-    optionB: { label: "Nonna, mi dispiace...", cassa: 30, vitalita: -2, response: "'U nipote d'u sindacu! Vergogna!' Tutto il rione lo sa." },
+    optionA: { label: "Aiuta a scaricare", cassa: -20, vitalita: 4, response: "La sagra e\' un successo! Gente da tutto il circondario. Rosso ti offre un panino." },
+    optionB: { label: "Verbale!", cassa: 100, vitalita: -2, response: "La sagra e\' annullata. Di nuovo. Rosso: 'Avete ammazzato pure \'u cinghiale.'" },
   },
   {
     text: "La processione di San Marco blocca il corso per due ore.",
-    optionA: { label: "E' tradizione!", cassa: 0, vitalita: 6, response: "Il paese si riunisce. Per un attimo sembra tutto come prima." },
-    optionB: { label: "Multa a tutti i carri", cassa: 300, vitalita: -5, response: "Il vescovo scrive al prefetto. I giornali ne parlano." },
+    optionA: { label: "E\' tradizione!", cassa: 0, vitalita: 6, response: "Il paese si riunisce. Per un attimo sembra tutto come prima." },
+    optionB: { label: "Multa a tutti i carri", cassa: 300, vitalita: -5, response: "Il vescovo scrive al prefetto. Rosso: 'Avete multatu pure \'u Signore. Complimenti.'" },
+  },
+  // --- Emergenze creative ---
+  {
+    text: "Un furgone di trasloco blocca Via Vittorio Emanuele. Una famiglia se ne va da San Marco.",
+    optionA: { label: "Aiutali a caricare", cassa: 0, vitalita: -2, response: "Se ne vanno in silenzio. Un altro appartamento vuoto. Ma almeno non hai peggiorato le cose." },
+    optionB: { label: "Multa al furgone!", cassa: 80, vitalita: -4, response: "La famiglia: 'Pure l\'ultima multa. Grazie di tutto, sinda\'.' Rosso non dice niente. Per una volta." },
+  },
+  {
+    text: "Un bambino ha lasciato la bici legata al palo della sosta. Occupazione abusiva.",
+    optionA: { label: "E\' un bambino...", cassa: 0, vitalita: 2, response: "Il bambino torna. Ti sorride. Hai ancora un\'anima." },
+    optionB: { label: "Rimozione forzata!", cassa: 10, vitalita: -3, response: "La mamma filma tutto. Il video fa il giro dei gruppi WhatsApp. Rosso lo condivide 47 volte." },
+  },
+  {
+    text: "Due vecchietti giocano a carte su un tavolo piazzato sullo stallo a pagamento.",
+    optionA: { label: "Lasciali giocare", cassa: 0, vitalita: 3, response: "'Na partitella \'e scopa in piazza. Come ai tempi belli. Ti invitano." },
+    optionB: { label: "Occupazione suolo pubblico!", cassa: 20, vitalita: -2, response: "I vecchietti: 'Sinda\', ccane si giocava a carte quando tu mancu eri nato.' Rosso applaude." },
   },
 ];
 

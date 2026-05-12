@@ -104,6 +104,8 @@ export const NEWS = [
   { text: "Comitato cittadini chiede chiarimenti al Consiglio. Ignorato.", minVit: 85, maxVit: 95 },
   { text: "Il comandante: 'Stiamo solo applicando il regolamento.'", minVit: 85, maxVit: 95 },
   { text: "ZTL temporanea in Piazza Umberto I durante la processione.", minVit: 85, maxVit: 95 },
+  { text: "Turista svizzero multato in piazza: 'Ho portato la cioccolata e m'anu multatu! Me ne torno in Svizzera!'", minVit: 85, maxVit: 95 },
+  { text: "Multato un passante con la carriola piena di fichi. Infrazione: veicolo non immatricolato.", minVit: 85, maxVit: 95 },
 
   // Phase 2 — Prime chiusure (85-60)
   { text: "Storica Edicola Manfredi chiude dopo 40 anni. 'I clienti non si fermavano piu.'", minVit: 60, maxVit: 85 },
@@ -115,6 +117,9 @@ export const NEWS = [
   { text: "Inaugurato nuovo parcheggio multipiano. A 3 km dal centro storico.", minVit: 60, maxVit: 85 },
   { text: "Diocesi preoccupata: visite al Convento dei Riformati dimezzate.", minVit: 60, maxVit: 85 },
   { text: "La Pro Loco: 'Stiamo lavorando.' (Bilancio annuale a -82%)", minVit: 60, maxVit: 85 },
+  { text: "Asinello legato in Piazza Selvaggi multato per divieto di sosta. Il proprietario: 'Ma e' un asino!'", minVit: 60, maxVit: 85 },
+  { text: "Tre capre dalla Motta bloccano il Corso. Il vigile non sa a chi intestare il verbale.", minVit: 60, maxVit: 85 },
+  { text: "Sedia a rotelle multata sulle strisce blu. Il video fa il giro d'Italia.", minVit: 60, maxVit: 85 },
 
   // Phase 3 — Meta partita (60-35)
   { text: "Frantoio Bruzio DOP chiude. 'L'olio si vende online, qui non viene piu nessuno.'", minVit: 35, maxVit: 60 },
@@ -127,6 +132,10 @@ export const NEWS = [
   { text: "Mostra fotografica 'San Marco com'era' in Villa Comunale. Nessun visitatore.", minVit: 35, maxVit: 60 },
   { text: "Macelleria Le Carni del Pollino chiude. Il titolare emigra a Cosenza.", minVit: 35, maxVit: 60 },
   { text: "Bilancio comunale in attivo per la prima volta dal 1985.", minVit: 35, maxVit: 60 },
+  { text: "Bambino multato per aver lasciato la bici al palo della sosta. La mamma fa un video virale.", minVit: 35, maxVit: 60 },
+  { text: "Due vecchietti multati per 'occupazione abusiva di stallo' con un tavolo da briscola.", minVit: 35, maxVit: 60 },
+  { text: "Il pizzaiolo non consegna piu' in centro. 'Ogni consegna mi costa una multa.'", minVit: 35, maxVit: 60 },
+  { text: "Contadino multato col trattore in piazza. 'L'anno prossimo le olive le portu a Roggiano.'", minVit: 35, maxVit: 60 },
 
   // Phase 4 — Crisi profonda (35-15)
   { text: "Trattoria 'U' Guiscardo' chiude. Ultimo piatto servito: pasta e patate.", minVit: 15, maxVit: 35 },
@@ -139,6 +148,9 @@ export const NEWS = [
   { text: "ISTAT: San Marco sotto i 6.000 abitanti per la prima volta dal 1861.", minVit: 15, maxVit: 35 },
   { text: "Gelateria Sichelgaita chiude. 'Pure Sichelgaita s'e' scocciata.'", minVit: 15, maxVit: 35 },
   { text: "Parrucchiere Tony saluta: 'Vado a Cosenza.'", minVit: 15, maxVit: 35 },
+  { text: "Camper tedesco di 9 metri bloccato in Via Roberto il Guiscardo. Il navigatore diceva 'strada percorribile'.", minVit: 15, maxVit: 35 },
+  { text: "Un gatto randagio dorme su uno stallo a pagamento. Il vigile valuta il verbale.", minVit: 15, maxVit: 35 },
+  { text: "Famiglia in partenza multata col furgone trasloco. 'Pure l'ultima multa. Grazie di tutto, sinda'.'", minVit: 15, maxVit: 35 },
 
   // Phase 5 — Fantasma (sotto 15)
   { text: "Serenata in dialetto sotto il municipio. Cinque presenti, tutti vigili.", minVit: 1, maxVit: 15 },
@@ -151,6 +163,8 @@ export const NEWS = [
   { text: "L'ultimo abitante lascia il paese. 'Almeno mo parcheggio dove voglio.'", minVit: 1, maxVit: 15 },
   { text: "Sindaco resta in carica. 'Qualcuno deve amministrare.'", minVit: 1, maxVit: 15 },
   { text: "Le casse sono piene. Non c'e' nessuno da servire.", minVit: 1, maxVit: 15 },
+  { text: "L'unico essere vivente in centro e' un gatto. Multato.", minVit: 1, maxVit: 15 },
+  { text: "Il vigile multa la propria auto di servizio per errore. Nessuno ride.", minVit: 1, maxVit: 15 },
 
   // Phase 6 — Schermata finale (vitalita = 0)
   { text: "San Marco Argentano premiato a Bruxelles: 'Modello di efficienza amministrativa.'", minVit: 0, maxVit: 0 },

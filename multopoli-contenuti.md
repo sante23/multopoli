@@ -81,14 +81,23 @@ Appaiono ogni ~45 secondi. Il giocatore sceglie tra opzione A (altruista) e opzi
 
 | Evento | Opzione A | Opzione B |
 |---|---|---|
-| Un turista chiede dove parcheggiare | Aiutalo (+3 vit) | Multalo! (+100 EUR, -2 vit) |
-| La scuola chiede sospensione multe | Concedi (+4 vit) | Rifiuta (+200 EUR, -3 vit) |
-| Corriere in doppia fila | Lascia stare (+2 vit) | Verbale! (+75 EUR, -1 vit) |
-| Parroco chiede parcheggio per funerale | Concedi (+5 vit) | Regolamento! (+150 EUR, -4 vit) |
-| Medico parcheggia per emergenza | E' emergenza (+3 vit) | Nessuna eccezione (+50 EUR, -3 vit) |
-| Furgone sagra del cinghiale | Aiuta a scaricare (+4 vit) | Verbale! (+100 EUR, -2 vit) |
-| Nonna Concetta parcheggia storta | Fai finta (+2 vit) | Nonna mi dispiace (+30 EUR, -2 vit) |
-| Processione di San Marco | E' tradizione! (+6 vit) | Multa ai carri (+300 EUR, -5 vit) |
+| Turista svizzero con cioccolata cerca parcheggio | Aiutalo (+4 vit) | Multalo! "Me ne torno in Svizzera!" (+120, -3 vit) |
+| Camper tedesco di 9 metri nel centro storico | Dirottalo (+3 vit) | Multa e rimozione! (+200, -3 vit) |
+| Asinello legato al palo della sosta | E' folklore! (+3 vit) | Divieto di sosta! "Avete multatu 'u ciucciu!" (+40, -2 vit) |
+| Zi' Peppino con la carriola di fichi | Lascialo passare (+2 vit) | Veicolo non assicurato! Video virale (+25, -2 vit) |
+| Tre capre dalla Motta bloccano il Corso | Aspetta (+3 vit) | Multa al proprietario! "'Ndo parcheggianu le capre?" (+60, -1 vit) |
+| La scuola chiede sospensione multe | Concedi (+4 vit) | Rifiuta (+200, -3 vit) |
+| Medico parcheggia per emergenza | E' emergenza (+3 vit) | Nessuna eccezione (+50, -3 vit) |
+| Parroco chiede parcheggio per funerale | Concedi (+5 vit) | Regolamento! (+150, -4 vit) |
+| Anziana con sedia a rotelle sulle strisce blu | Ma figurati... (+2 vit) | Regolamento! Finisce su Striscia (+15, -4 vit) |
+| Contadino col trattore scarica olive | Fa' pure (+3 vit) | ZTL! "Le olive le portu a Roggiano" (+80, -2 vit) |
+| Nonna Concetta parcheggia la Panda storta | Fai finta (+2 vit) | Mi dispiace, nonna... (+30, -2 vit) |
+| Ragazzo consegna pizze sul marciapiede | Lascialo (+2 vit) | Verbale! "Mo' mancu 'a pizza arriva" (+50, -1 vit) |
+| Furgone sagra del cinghiale | Aiuta a scaricare (+4 vit) | Verbale! "Avete ammazzato pure 'u cinghiale" (+100, -2 vit) |
+| Processione di San Marco | E' tradizione! (+6 vit) | Multa ai carri! "Avete multatu 'u Signore" (+300, -5 vit) |
+| Furgone trasloco: famiglia se ne va | Aiutali (-2 vit) | Multa! "Pure l'ultima multa. Grazie di tutto" (+80, -4 vit) |
+| Bici di un bambino legata al palo della sosta | E' un bambino... (+2 vit) | Rimozione! Video su WhatsApp (+10, -3 vit) |
+| Due vecchietti giocano a carte sullo stallo | Lasciali giocare (+3 vit) | Occupazione abusiva! "Si giocava ccane quando mancu eri nato" (+20, -2 vit) |
 
 ### SPAZIO PER NUOVI EVENTI:
 
