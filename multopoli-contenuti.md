@@ -5,43 +5,53 @@
 
 ---
 
-## 1. FRASI DI ROSSO (Comitato Commercianti)
+## 1. FRASI DI ROSSO (Comitato di Resistenza Paesano)
 
-Rosso e' il capo dei commercianti di San Marco. Parla in un misto di italiano e calabrese.
-Le frasi appaiono come messaggi "WhatsApp" durante il gioco, in base al livello di pressione del Comitato.
+**Rosso** ha 50 anni, ex attivista di estrema sinistra, ora commerciante a San Marco Argentano.
+Ha la natura polemica e sarcastica del tipico atteggiamento di sinistra che ha sempre ragione.
+Mescola retorica politica (lotta di classe, solidarieta', comizi) con dialetto sammarchese.
+Le frasi appaiono come messaggi "WhatsApp" durante il gioco.
 
-### Pressione bassa (0-20%) — Rosso brontola
+### Pressione bassa (0-20%) — Rosso brontola dal bancone
 
-- "Sinda', ma che stai facennu? 'U paese se sta svuotannu!"
-- "Si stava meglio quando si stava peggio."
-- "Chivanu multe ca para na tempesta."
-- "Ma tu 'u sai ca 'a gente non vene cchiu' ccane?"
-
-### Pressione media (20-50%) — Rosso si organizza
-
+- "Sinda', si stava meglio quando si stava peggio. E si stava peggio assai."
+- "Chiovanu multe ca para na tempesta. E ppe' 'u populu non c'e' mancu l'ombrello."
+- "Io a vent'anni occupavo le fabbriche. Mo' devo occupare un parcheggio ppe' campare."
+- "Ma tu 'u sai ca 'a gente non vene cchiu' ccane? O ti 'u deve dire Marx?"
+- "Questa non e' amministrazione, e' esproprio proletario al contrario. Rubare ai poveri ppe' dare alla cassa."
 - "Hanno fatto 'a multa a unu pure alla montagna. Divieto di sosta alla casetta di cacciatori!"
-- "Ho parlato col Prefetto. Ti conviene calmarti."
-- "Abbiamo raccolto 200 firme. Duecento. Ci sono piu' firme che abitanti rimasti."
-- "Stasera riunione al Convento. Viene tutto il rione."
-- "'U bar e' chiusu, 'a libreria e' chiusa... mo' chi vi paga le multe, i piccioni?"
-- "Mi dicono ca pure 'u parroco ha pigliatu 'a multa. Vergogna!"
 
-### Pressione alta (50-80%) — Rosso e' furioso
+### Pressione media (20-50%) — Rosso si organizza, tira fuori la dialettica
 
-- "Sinda', mi stai facendo perdere 'a pacienza. E io 'a pacienza l'ho lunga."
-- "L'ultima volta che ho visto cosi' tante divise era al funerale di mio padre."
-- "Ho chiamato 'u TG3 Calabria. Arrivano domani con le telecamere."
-- "A' piazza Selvaggi non si parcheggia, non si cammina, non si respira. Si multa e basta."
-- "Mo' basta. Porto i commercianti in piazza. Tutti."
-- "Pure 'a signora Concetta ca porta i fiori al cimitero ha pigliatu 'a multa. 'A vergogna!"
+- "Ho parlato cu' 'u Prefetto. Ti conviene calmarti, cumpa'. Io 'a pacienza l'haiu lunga, ma non eterna."
+- "Abbiamo raccolto 200 firme. Duecento. Ci su' cchiu' firme che abitanti rimasti. Pensa un po'."
+- "'U bar e' chiusu, 'a libreria e' chiusa... mo' chi vi paga le multe, i piccioni? Questa e' la vostra economia."
+- "Mi dicunu ca pure 'u parroco ha pigliatu 'a multa. Vergogna! Mancu 'a chiesa vi ferma."
+- "Stasera assemblea al Convento. Viene tutto 'u rione. Come nel '77, ma cu' meno capelli e cchiu' ragione."
+- "Gramsci diceva: 'Istruitevi, organizzatevi, agitatevi.' Noi ci stiamo organizzando, sinda'."
+- "'A multa l'ha pigliata pure 'u gatto. E mancu 'a patente tene. Bell'amministrazione."
+- "Trent'anni fa lottavamo ppe' i diritti dei lavoratori. Mo' lottiamo ppe' parcheggiare davanti al negozio. Che progresso."
+
+### Pressione alta (50-80%) — Rosso in modalita' comizio
+
+- "Sinda', mi stai facennu perdere 'a pacienza. E io sugno unu ca ha fatto i picchetti alla Fiat, figurati."
+- "L'ultima volta che ho visto cosi' tante divise era al G8. E la' almeno avevamo ragione. Pure ccane."
+- "Ho chiamatu 'u TG3 Calabria. Arrivanu domani cu' le telecamere. Vediamo si parli cosi' bene davanti a Ferrara."
+- "'A piazza Selvaggi non si parcheggia, non si cammina, non si respira. Si multa e basta. Questa la chiami democrazia?"
+- "Mo' basta. Porto i commercianti in piazza. Tutti. Come si faceva una volta, sinda'. Occupazione permanente."
+- "Pure 'a signura Concetta ca porta i fiori al cimitero ha pigliatu 'a multa. Complimenti. Multate pure i morti, no?"
+- "Il capitale si accumula nelle casse del Comune. I lavoratori perdono il negozio. Marx aveva ragione, anche a San Marco."
+- "Voi proteggete il regolamento. Noi proteggiamo il paese. Vediamo chi vince alla lunga."
 
 ### Pressione massima (80-100%) — Rosso dichiara guerra
 
-- "Sinda', questo e' l'ultimo avvertimento. Poi blocchiamo tutto."
-- "Chiamu 'u giornale, chiamu 'a televisione, chiamu pure 'u Papa!"
-- "Da domani sciopero generale. Nessuno apre. Nessuno compra. Vediamo chi vince."
+- "Sinda', questo e' l'ultimo avvertimento. Poi blocchiamo tutto. E io 'i blocchi li sacciu fare."
+- "Chiamu 'u giornale, chiamu 'a televisione, chiamu 'u sindacato. Vuoi la lotta? Hai la lotta."
+- "Da domani sciopero generale. Nessuno apre. Nessuno compra. Come ai tempi belli, sinda'. Solidarieta' di classe."
 - "Hai voluto la bicicletta? Mo' pedalare... ma attento alla multa per sosta vietata della bici!"
-- "Il paese e' morto, sinda'. E l'hai ammazzato tu cu' 'u taccuino."
+- "'U paese e' morto, sinda'. E l'hai ammazzato tu cu' 'u taccuinu. La storia ti giudichera'. E io pure."
+- "Io ho fatto le barricate a Cosenza nel '94. Tu pensi ca mi fanno paura i vigili? Scendiamo in piazza."
+- "Quando l'ultimo negozio chiude, vieni a bussare da me. Ti offro un caffe'. Se trovo ancora chi me lo vende."
 
 ### SPAZIO PER NUOVE FRASI DI ROSSO:
 

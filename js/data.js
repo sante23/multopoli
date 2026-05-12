@@ -181,46 +181,57 @@ export const ACHIEVEMENTS = [
 ];
 
 // ============================================================
-// COMITATO DI RESISTENZA — Rosso, capo dei commercianti
+// COMITATO DI RESISTENZA PAESANO
+// Rosso: 50 anni, ex attivista di estrema sinistra, ora commerciante.
+// Sarcastico, polemico, ha sempre ragione. Mescola retorica politica
+// e dialetto sammarchese. La lotta di classe applicata ai parcheggi.
 // ============================================================
 
 export const ROSSO_MESSAGES = [
-  // Pressione bassa (0-20%) — Rosso brontola
-  { text: "Sinda', ma che stai facennu? 'U paese se sta svuotannu!", minPress: 0, maxPress: 20 },
-  { text: "Si stava meglio quando si stava peggio.", minPress: 0, maxPress: 20 },
-  { text: "Chivanu multe ca para na tempesta.", minPress: 0, maxPress: 20 },
-  { text: "Ma tu 'u sai ca 'a gente non vene cchiu' ccane?", minPress: 0, maxPress: 20 },
+  // Pressione bassa (0-20%) — Rosso brontola dal bancone, sarcasmo leggero
+  { text: "Sinda', si stava meglio quando si stava peggio. E si stava peggio assai.", minPress: 0, maxPress: 20 },
+  { text: "Chiovanu multe ca para na tempesta. E ppe' 'u populu non c'e' mancu l'ombrello.", minPress: 0, maxPress: 20 },
+  { text: "Io a vent'anni occupavo le fabbriche. Mo' devo occupare un parcheggio ppe' campare.", minPress: 0, maxPress: 20 },
+  { text: "Ma tu 'u sai ca 'a gente non vene cchiu' ccane? O ti 'u deve dire Marx?", minPress: 0, maxPress: 20 },
+  { text: "Questa non e' amministrazione, e' esproprio proletario al contrario. Rubare ai poveri ppe' dare alla cassa.", minPress: 0, maxPress: 20 },
+  { text: "Hanno fatto 'a multa a unu pure alla montagna. Divieto di sosta alla casetta di cacciatori!", minPress: 0, maxPress: 20 },
 
-  // Pressione media (20-50%) — Rosso si organizza
-  { text: "Hanno fatto 'a multa a unu pure alla montagna. Divieto di sosta alla casetta di cacciatori!", minPress: 20, maxPress: 50 },
-  { text: "Ho parlato col Prefetto. Ti conviene calmarti.", minPress: 20, maxPress: 50 },
-  { text: "Abbiamo raccolto 200 firme. Duecento. Ci sono piu' firme che abitanti rimasti.", minPress: 20, maxPress: 50 },
-  { text: "Stasera riunione al Convento. Viene tutto il rione.", minPress: 20, maxPress: 50 },
-  { text: "'U bar e' chiusu, 'a libreria e' chiusa... mo' chi vi paga le multe, i piccioni?", minPress: 20, maxPress: 50 },
-  { text: "Mi dicono ca pure 'u parroco ha pigliatu 'a multa. Vergogna!", minPress: 20, maxPress: 50 },
+  // Pressione media (20-50%) — Rosso si organizza, tira fuori la dialettica
+  { text: "Ho parlato cu' 'u Prefetto. Ti conviene calmarti, cumpa'. Io 'a pacienza l'haiu lunga, ma non eterna.", minPress: 20, maxPress: 50 },
+  { text: "Abbiamo raccolto 200 firme. Duecento. Ci su' cchiu' firme che abitanti rimasti. Pensa un po'.", minPress: 20, maxPress: 50 },
+  { text: "'U bar e' chiusu, 'a libreria e' chiusa... mo' chi vi paga le multe, i piccioni? Questa e' la vostra economia.", minPress: 20, maxPress: 50 },
+  { text: "Mi dicunu ca pure 'u parroco ha pigliatu 'a multa. Vergogna! Mancu 'a chiesa vi ferma.", minPress: 20, maxPress: 50 },
+  { text: "Stasera assemblea al Convento. Viene tutto 'u rione. Come nel '77, ma cu' meno capelli e cchiu' ragione.", minPress: 20, maxPress: 50 },
+  { text: "Gramsci diceva: 'Istruitevi, organizzatevi, agitatevi.' Noi ci stiamo organizzando, sinda'.", minPress: 20, maxPress: 50 },
+  { text: "'A multa l'ha pigliata pure 'u gatto. E mancu 'a patente tene. Bell'amministrazione.", minPress: 20, maxPress: 50 },
+  { text: "Trent'anni fa lottavamo ppe' i diritti dei lavoratori. Mo' lottiamo ppe' parcheggiare davanti al negozio. Che progresso.", minPress: 20, maxPress: 50 },
 
-  // Pressione alta (50-80%) — Rosso e' furioso
-  { text: "Sinda', mi stai facendo perdere 'a pacienza. E io 'a pacienza l'ho lunga.", minPress: 50, maxPress: 80 },
-  { text: "L'ultima volta che ho visto cosi' tante divise era al funerale di mio padre.", minPress: 50, maxPress: 80 },
-  { text: "Ho chiamato 'u TG3 Calabria. Arrivano domani con le telecamere.", minPress: 50, maxPress: 80 },
-  { text: "A' piazza Selvaggi non si parcheggia, non si cammina, non si respira. Si multa e basta.", minPress: 50, maxPress: 80 },
-  { text: "Mo' basta. Porto i commercianti in piazza. Tutti.", minPress: 50, maxPress: 80 },
-  { text: "Pure 'a signora Concetta ca porta i fiori al cimitero ha pigliatu 'a multa. 'A vergogna!", minPress: 50, maxPress: 80 },
+  // Pressione alta (50-80%) — Rosso e' in modalita' comizio, furioso e lucido
+  { text: "Sinda', mi stai facennu perdere 'a pacienza. E io sugno unu ca ha fatto i picchetti alla Fiat, figurati.", minPress: 50, maxPress: 80 },
+  { text: "L'ultima volta che ho visto cosi' tante divise era al G8. E la' almeno avevamo ragione. Pure ccane.", minPress: 50, maxPress: 80 },
+  { text: "Ho chiamatu 'u TG3 Calabria. Arrivanu domani cu' le telecamere. Vediamo si parli cosi' bene davanti a Ferrara.", minPress: 50, maxPress: 80 },
+  { text: "'A piazza Selvaggi non si parcheggia, non si cammina, non si respira. Si multa e basta. Questa la chiami democrazia?", minPress: 50, maxPress: 80 },
+  { text: "Mo' basta. Porto i commercianti in piazza. Tutti. Come si faceva una volta, sinda'. Occupazione permanente.", minPress: 50, maxPress: 80 },
+  { text: "Pure 'a signura Concetta ca porta i fiori al cimitero ha pigliatu 'a multa. Complimenti. Multate pure i morti, no?", minPress: 50, maxPress: 80 },
+  { text: "Il capitale si accumula nelle casse del Comune. I lavoratori perdono il negozio. Marx aveva ragione, anche a San Marco.", minPress: 50, maxPress: 80 },
+  { text: "Voi proteggete il regolamento. Noi proteggiamo il paese. Vediamo chi vince alla lunga.", minPress: 50, maxPress: 80 },
 
-  // Pressione massima (80-100%) — Rosso dichiara guerra
-  { text: "Sinda', questo e' l'ultimo avvertimento. Poi blocchiamo tutto.", minPress: 80, maxPress: 100 },
-  { text: "Chiamu 'u giornale, chiamu 'a televisione, chiamu pure 'u Papa!", minPress: 80, maxPress: 100 },
-  { text: "Da domani sciopero generale. Nessuno apre. Nessuno compra. Vediamo chi vince.", minPress: 80, maxPress: 100 },
+  // Pressione massima (80-100%) — Rosso dichiara guerra, comizio finale
+  { text: "Sinda', questo e' l'ultimo avvertimento. Poi blocchiamo tutto. E io 'i blocchi li sacciu fare.", minPress: 80, maxPress: 100 },
+  { text: "Chiamu 'u giornale, chiamu 'a televisione, chiamu 'u sindacato. Vuoi la lotta? Hai la lotta.", minPress: 80, maxPress: 100 },
+  { text: "Da domani sciopero generale. Nessuno apre. Nessuno compra. Come ai tempi belli, sinda'. Solidarieta' di classe.", minPress: 80, maxPress: 100 },
   { text: "Hai voluto la bicicletta? Mo' pedalare... ma attento alla multa per sosta vietata della bici!", minPress: 80, maxPress: 100 },
-  { text: "Il paese e' morto, sinda'. E l'hai ammazzato tu cu' 'u taccuino.", minPress: 80, maxPress: 100 },
+  { text: "'U paese e' morto, sinda'. E l'hai ammazzato tu cu' 'u taccuinu. La storia ti giudichera'. E io pure.", minPress: 80, maxPress: 100 },
+  { text: "Io ho fatto le barricate a Cosenza nel '94. Tu pensi ca mi fanno paura i vigili? Scendiamo in piazza.", minPress: 80, maxPress: 100 },
+  { text: "Quando l'ultimo negozio chiude, vieni a bussare da me. Ti offro un caffe'. Se trovo ancora chi me lo vende.", minPress: 80, maxPress: 100 },
 ];
 
 export const COMITATO_ACTIONS = [
-  { soglia: 20, tipo: 'volantini',  nome: 'Volantini in piazza',       effetto: 'news',         desc: 'Il Comitato distribuisce volantini contro le multe.' },
-  { soglia: 40, tipo: 'petizione',  nome: 'Petizione al Prefetto',     effetto: 'slowdown',     desc: 'Multe rallentate del 30% per 20 secondi.' },
-  { soglia: 60, tipo: 'protesta',   nome: 'Protesta in piazza',        effetto: 'block',        desc: 'Multe bloccate per 20 secondi!' },
-  { soglia: 80, tipo: 'tg3',        nome: 'Servizio del TG3 Calabria', effetto: 'choice',       desc: 'Le telecamere sono qui. Cosa fai?' },
-  { soglia: 95, tipo: 'sciopero',   nome: 'Sciopero generale',         effetto: 'shutdown',     desc: 'Il paese si ferma. Zero income per 30 secondi.' },
+  { soglia: 20, tipo: 'volantini',  nome: 'Volantini del Comitato',        effetto: 'news',     desc: 'Il Comitato di Resistenza Paesano distribuisce volantini.' },
+  { soglia: 40, tipo: 'petizione',  nome: 'Petizione al Prefetto',         effetto: 'slowdown', desc: 'Rosso consegna 200 firme. Multe rallentate per 20s.' },
+  { soglia: 60, tipo: 'protesta',   nome: 'Occupazione di Piazza Selvaggi', effetto: 'block',   desc: 'Il Comitato occupa la piazza. Multe bloccate per 20s!' },
+  { soglia: 80, tipo: 'tg3',        nome: 'Servizio del TG3 Calabria',     effetto: 'choice',   desc: 'Le telecamere sono in piazza. Rosso parla al microfono.' },
+  { soglia: 95, tipo: 'sciopero',   nome: 'Sciopero generale',             effetto: 'shutdown', desc: 'Rosso chiama lo sciopero. Il paese si ferma. Zero income per 30s.' },
 ];
 
 // ============================================================
@@ -231,50 +242,50 @@ export const CARTE_AZIONE = [
   {
     titolo: 'Pattugliamento personale',
     desc: 'Esci con i vigili per un giro di ispezione.',
-    optionA: { label: 'Vai!', effetto: { multeBonus: 2, durata: 15, pressione: 8 }, response: 'Multe raddoppiate per 15 secondi. Ma il Comitato non la prende bene.' },
+    optionA: { label: 'Vai!', effetto: { multeBonus: 2, durata: 15, pressione: 8 }, response: 'Multe raddoppiate per 15s. Rosso ti vede passare e scuote la testa: "Pare \'a Gestapo."' },
     optionB: { label: 'Resta in ufficio', effetto: {}, response: 'Una mattinata tranquilla. Nessun danno, nessun guadagno.' },
   },
   {
     titolo: 'Ricevi i cittadini',
-    desc: 'Una fila di persone aspetta fuori dal municipio.',
-    optionA: { label: 'Ascoltali', effetto: { vitalita: 4, pressione: -15, blockMulte: 10 }, response: 'Li ascolti per 10 secondi. La tensione si abbassa. Niente multe pero\'.' },
-    optionB: { label: 'Non ho tempo', effetto: { pressione: 10 }, response: 'Li ignori. Rosso scuote la testa dalla finestra del bar.' },
+    desc: 'Una fila di persone aspetta fuori dal municipio. Rosso e\' in prima fila.',
+    optionA: { label: 'Ascoltali', effetto: { vitalita: 4, pressione: -15, blockMulte: 10 }, response: 'Rosso parla per venti minuti. Il Che Guevara, i diritti, le strisce blu. Ma la tensione scende.' },
+    optionB: { label: 'Non ho tempo', effetto: { pressione: 10 }, response: 'Li ignori. Rosso dal corridoio: "Tipico. Il potere non ascolta mai il popolo."' },
   },
   {
     titolo: 'Conferenza stampa',
     desc: 'I giornalisti locali vogliono una dichiarazione.',
-    optionA: { label: 'Difendi le multe', effetto: { cassa: 500, pressione: 12 }, response: '"Le casse non sono mai state cosi\' piene!" Applauso dei vigili. Fischi dei commercianti.' },
-    optionB: { label: 'Prometti moderazione', effetto: { pressione: -20, vitalita: 2 }, response: 'Prometti di rallentare. Rosso ti guarda scettico ma annuisce.' },
+    optionA: { label: 'Difendi le multe', effetto: { cassa: 500, pressione: 12 }, response: '"Le casse non sono mai state cosi\' piene!" Rosso in fondo alla sala ride amaro.' },
+    optionB: { label: 'Prometti moderazione', effetto: { pressione: -20, vitalita: 2 }, response: 'Prometti di rallentare. Rosso annuisce scettico: "\'U lupo perde \'u pilu ma non \'u viziu."' },
   },
   {
     titolo: 'Cena col Prefetto',
     desc: 'Il Prefetto di Cosenza vuole conoscerti.',
-    optionA: { label: 'Vai a cena', effetto: { upgradeSconto: 0.3 }, response: 'Serata lunga. Prossimo upgrade scontato del 30%!' },
+    optionA: { label: 'Vai a cena', effetto: { upgradeSconto: 0.3 }, response: 'Serata lunga. Prossimo upgrade scontato del 30%. Rosso: "Cene cu\' \'u potere. Classico."' },
     optionB: { label: 'Declina', effetto: { vitalita: 2 }, response: 'Resti a San Marco. Mangi da Nonna Rosa. Se e\' ancora aperta.' },
   },
   {
     titolo: 'Pisolino pomeridiano',
     desc: 'La giornata e\' lunga. Il divano dell\'ufficio chiama.',
-    optionA: { label: 'Riposati', effetto: { vitalita: 5, blockMulte: 8 }, response: 'Un pisolino rigenerante. Ma Rosso ti becca e manda la foto ai giornali.' },
+    optionA: { label: 'Riposati', effetto: { vitalita: 5, blockMulte: 8 }, response: 'Un pisolino rigenerante. Ma Rosso ti becca e manda la foto al TG3: "Dorme mentre \'u paese more."' },
     optionB: { label: 'Caffe\' e avanti', effetto: { multeBonus: 1.5, durata: 10 }, response: 'Doppio espresso. Energie rinnovate, multe potenziate per 10s.' },
   },
   {
     titolo: 'Inaugurazione rotonda',
     desc: 'La nuova rotonda e\' pronta. Con 6 nuovi stalli a pagamento.',
-    optionA: { label: 'Gran cerimonia', effetto: { cassa: 300, pressione: 8 }, response: 'Taglio del nastro con foto. I vigili applaudono. I cittadini meno.' },
-    optionB: { label: 'Inaugurazione sobria', effetto: { vitalita: 2, pressione: -5 }, response: 'Niente fanfara. Il paese apprezza la sobrietà.' },
+    optionA: { label: 'Gran cerimonia', effetto: { cassa: 300, pressione: 8 }, response: 'Taglio del nastro. Rosso dalla folla: "Bravi, na rotonda! Mo\' ci giriamo intorno come \'a vita nostra."' },
+    optionB: { label: 'Inaugurazione sobria', effetto: { vitalita: 2, pressione: -5 }, response: 'Niente fanfara. Rosso apprezza: "Almeno non ci prendi pure ppe\' fessi."' },
   },
   {
     titolo: 'Richiesta dalla Diocesi',
     desc: 'Il vescovo chiede parcheggio libero per la messa della domenica.',
-    optionA: { label: 'Concedi', effetto: { vitalita: 6, pressione: -10 }, response: 'La messa e\' piena. Il vescovo prega anche per te.' },
-    optionB: { label: 'Regolamento!', effetto: { cassa: 200, pressione: 15 }, response: '"Pure \'u Padreterno paga \'a sosta!" commenta Rosso.' },
+    optionA: { label: 'Concedi', effetto: { vitalita: 6, pressione: -10 }, response: 'La messa e\' piena. Rosso: "Io sugno ateo, ma almeno \'u Padreterno non fa le multe."' },
+    optionB: { label: 'Regolamento!', effetto: { cassa: 200, pressione: 15 }, response: 'Rosso al megafono: "Ha multato pure \'u Padreterno! Non c\'e\' cchiu\' religione!"' },
   },
   {
     titolo: 'Gita a Cosenza',
     desc: 'Una giornata fuori da San Marco. Shopping e relax.',
-    optionA: { label: 'Vai a Cosenza', effetto: { blockMulte: 15, pressione: -8, vitalita: 3 }, response: 'Ti godi Corso Mazzini. Le multe si fermano per 15s. Il paese respira.' },
-    optionB: { label: 'Resta al comando', effetto: { multeBonus: 1.5, durata: 12 }, response: 'Rimani al posto. Produttivita\' massima.' },
+    optionA: { label: 'Vai a Cosenza', effetto: { blockMulte: 15, pressione: -8, vitalita: 3 }, response: 'Ti godi Corso Mazzini. Le multe si fermano. Rosso: "Almeno a Cosenza si parcheggia."' },
+    optionB: { label: 'Resta al comando', effetto: { multeBonus: 1.5, durata: 12 }, response: 'Rimani al posto. Produttivita\' massima. Rosso: "\'U stakanovista delle multe."' },
   },
 ];
 
