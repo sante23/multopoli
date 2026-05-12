@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Multopoli — San Marco Argentano</title>
+  <meta name="description" content="Il gioco satirico che ogni cittadino e commerciante italiano dovrebbe provare. Amministra un borgo e fai cassa con le multe.">
+  <meta property="og:title" content="Multopoli — San Marco Argentano">
+  <meta property="og:description" content="Ho svuotato un intero paese con le multe. Provaci anche tu.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#1a1a2e">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==================== START SCREEN ==================== -->
+  <div id="start-screen" class="screen">
+    <div class="start-content">
+      <div class="start-torre">
+        <div class="start-torre-top"></div>
+        <div class="start-torre-body"></div>
+        <div class="start-torre-base"></div>
+      </div>
+      <h1 class="title">MULTOPOLI</h1>
+      <h2 class="subtitle">San Marco Argentano</h2>
+      <p class="tagline">Amministra un piccolo borgo e fai cassa con le multe...<br>
+        <em>mentre il paese si svuota sotto i tuoi occhi.</em></p>
+      <div class="start-buttons">
+        <button id="btn-start" class="btn btn-primary">Inizia a Multare</button>
+        <button id="btn-continue" class="btn btn-secondary" style="display:none">Continua Partita</button>
+      </div>
+      <p class="disclaimer">Multopoli e' un gioco satirico di fantasia. Nomi e situazioni sono inventati.<br>
+        Il patrimonio storico citato e' trattato con il rispetto che merita.</p>
+    </div>
+  </div>
+
+  <!-- ==================== GAME SCREEN ==================== -->
+  <div id="game-screen" class="screen" style="display:none">
+
+    <!-- HUD -->
+    <div id="hud">
+      <div class="hud-item">
+        <span class="hud-icon">&#x1F4B0;</span>
+        <div class="hud-data">
+          <span class="hud-label">Cassa</span>
+          <span id="hud-cassa" class="hud-value">0 &#x20AC;</span>
+        </div>
+      </div>
+      <div class="hud-item hud-vitalita">
+        <span class="hud-icon">&#x1F3D8;</span>
+        <div class="hud-data">
+          <span class="hud-label">Vitalita</span>
+          <div class="hud-bar-container">
+            <div id="hud-vitalita-fill" class="hud-bar-fill" style="width:100%"></div>
+          </div>
+          <span id="hud-vitalita" class="hud-value-small">100</span>
+        </div>
+      </div>
+      <div class="hud-item">
+        <span class="hud-icon">&#x1F4CB;</span>
+        <div class="hud-data">
+          <span class="hud-label">Multe</span>
+          <span id="hud-multe" class="hud-value">0</span>
+        </div>
+      </div>
+      <div class="hud-item">
+        <span class="hud-icon">&#x23F1;</span>
+        <div class="hud-data">
+          <span class="hud-label">Multe/s</span>
+          <span id="hud-mps" class="hud-value">0/s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="game-content">
+
+      <!-- Town Map -->
+      <div id="town-map" class="phase-1" data-phase="1">
+        <div id="town-filter"></div>
+        <div id="pedestrians-layer"></div>
+
+        <!-- Sagra Overlay -->
+        <div id="sagra-overlay">
+          <div class="sagra-text">&#x1F389; SAGRA IN CORSO &#x1F389;</div>
+          <div class="sagra-subtext">Le multe sono sospese!</div>
+        </div>
+
+        <!-- Sichelgaita Overlay -->
+        <div id="sichelgaita-overlay">
+          <div class="sichelgaita-ghost"></div>
+          <div class="sichelgaita-text">Sichelgaita...</div>
+          <div class="sichelgaita-bonus">+2 vitalita</div>
+        </div>
+      </div>
+
+      <!-- Upgrade Panel (desktop: sidebar, mobile: bottom sheet) -->
+      <div id="upgrade-panel">
+        <div class="upgrade-panel-header">
+          <h3>Potenziamenti</h3>
+        </div>
+        <div id="upgrade-list"></div>
+        <div class="sagra-section">
+          <button id="btn-sagra" class="btn btn-sagra" disabled>Organizza Sagra (100 &#x20AC;)</button>
+          <span class="sagra-hint">Recupera vitalita, blocca multe per 10s</span>
+        </div>
+      </div>
+
+      <!-- Mobile upgrade toggle -->
+      <button id="upgrade-toggle" aria-label="Mostra potenziamenti">
+        <span class="toggle-arrow">&#x25B2;</span>
+        <span class="toggle-label">Potenziamenti</span>
+      </button>
+    </div>
+
+    <!-- News Ticker -->
+    <div id="news-ticker" class="news-hidden">
+      <span class="news-icon">&#x1F4F0;</span>
+      <span id="news-text"></span>
+    </div>
+
+    <!-- Combo display -->
+    <div id="combo-display" class="combo-hidden"></div>
+
+    <!-- Shop closure overlay -->
+    <div id="closure-overlay">
+      <div class="closure-saracinesca"></div>
+      <div class="closure-content">
+        <div class="closure-icon">&#x1F6AA;</div>
+        <div id="closure-name" class="closure-name"></div>
+        <div id="closure-msg" class="closure-msg"></div>
+      </div>
+    </div>
+
+    <!-- Random event modal -->
+    <div id="event-modal">
+      <div class="event-card">
+        <div id="event-text" class="event-text"></div>
+        <div class="event-buttons">
+          <button id="event-btn-a" class="btn btn-event btn-event-a"></button>
+          <button id="event-btn-b" class="btn btn-event btn-event-b"></button>
+        </div>
+        <div id="event-response" class="event-response"></div>
+      </div>
+    </div>
+
+    <!-- Achievement Container -->
+    <div id="achievement-container"></div>
+
+    <!-- Mute button -->
+    <button id="btn-mute" class="btn-mute" aria-label="Mute">&#x1F50A;</button>
+  </div>
+
+  <!-- ==================== END SCREEN ==================== -->
+  <div id="end-screen" class="screen" style="display:none">
+    <div class="end-content">
+      <div class="end-trophy">&#x1F3C6;</div>
+      <h1 id="end-title" class="end-title">HAI VINTO</h1>
+      <div id="end-stats" class="end-stats"></div>
+      <blockquote id="end-quote" class="end-quote">
+        "Ma le casse comunali non sono mai state cosi piene."
+      </blockquote>
+      <div class="end-buttons">
+        <button id="btn-share" class="btn btn-primary btn-share">Condividi su WhatsApp</button>
+        <button id="btn-restart" class="btn btn-secondary">Ricomincia</button>
+      </div>
+      <p class="end-credits">
+        MULTOPOLI &mdash; San Marco Argentano Edition<br>
+        <small>Un gioco satirico sulla repressione del parcheggio nei piccoli comuni.</small>
+      </p>
+    </div>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
