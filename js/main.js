@@ -1,11 +1,12 @@
 // ============================================================
 // MULTOPOLI — Main Entry Point
-// Bootstrap, game loop, event handlers, audio integration
+// Bootstrap, game loop, all event handlers
 // ============================================================
 
 import {
   getState, resetState, tick, doClick, buyUpgrade, organizzaSagra,
-  loadGame, saveGame, hasSave, recalcMPS, applyEventChoice
+  loadGame, saveGame, hasSave, recalcMPS, applyEventChoice,
+  riceviComitato, applyComitatoAction, applyCartaChoice, calcScore
 } from './game.js';
 
 import {
@@ -15,7 +16,9 @@ import {
   animateAutoFine, showSagra, showSichelgaita, showDrogoneView,
   showEndScreen, showStartScreen, showGameScreen, getShareText,
   applySavedState, showCombo, screenShake, spawnParticles,
-  showClosureOverlay, showRandomEvent, updateVigili
+  showClosureOverlay, showRandomEvent, updateVigili,
+  toggleAchievementPanel, showRossoMessage, showComitatoAction,
+  showCarta, fetchLeaderboard, submitScore, renderLeaderboard
 } from './render.js';
 
 import {
@@ -59,13 +62,17 @@ function setupGlobalEvents() {
     window.open(whatsappUrl, '_blank');
   });
 
-  // Mute button
+  // Mute
   document.getElementById('btn-mute').addEventListener('click', () => {
     const muted = toggleMute();
     document.getElementById('btn-mute').textContent = muted ? '\u{1F507}' : '\u{1F50A}';
   });
 
-  // Game event delegation (set once, works with rebuilt DOM)
+  // Achievement panel
+  document.getElementById('btn-achievements').addEventListener('click', toggleAchievementPanel);
+  document.getElementById('ach-close').addEventListener('click', toggleAchievementPanel);
+
+  // Game event delegation
   document.getElementById('town-map').addEventListener('click', (e) => {
     const car = e.target.closest('.car');
     if (!car) {
@@ -83,12 +90,12 @@ function setupGlobalEvents() {
   });
 
   document.getElementById('btn-sagra').addEventListener('click', handleSagra);
+  document.getElementById('btn-comitato').addEventListener('click', handleRiceviComitato);
 
   const toggle = document.getElementById('upgrade-toggle');
   if (toggle) {
     toggle.addEventListener('click', () => {
-      const panel = document.getElementById('upgrade-panel');
-      panel.classList.toggle('open');
+      document.getElementById('upgrade-panel').classList.toggle('open');
       toggle.classList.toggle('open');
     });
   }
@@ -96,6 +103,13 @@ function setupGlobalEvents() {
   // Random event buttons
   document.getElementById('event-btn-a').addEventListener('click', () => handleEventChoice('a'));
   document.getElementById('event-btn-b').addEventListener('click', () => handleEventChoice('b'));
+
+  // Carta azione buttons
+  document.getElementById('carta-btn-a').addEventListener('click', () => handleCartaChoice('a'));
+  document.getElementById('carta-btn-b').addEventListener('click', () => handleCartaChoice('b'));
+
+  // Save record
+  document.getElementById('btn-save-record').addEventListener('click', handleSaveRecord);
 }
 
 function startGame() {
@@ -103,39 +117,32 @@ function startGame() {
   buildTownMap();
   buildUpgradePanel();
   recalcMPS();
-
   applySavedState();
-
   startGameLoop();
-
   updateHUD();
   updateUpgrades();
   updatePhaseVisuals(true);
   updateVigili();
 }
 
-// ----- Event Handlers -----
+// ----- Click Handler -----
 function handleCarClick(carEl) {
   const result = doClick();
   if (!result) return;
 
-  // Audio
   playClick();
   if (result.comboLevel >= 2) {
     playCoin();
     playCombo(result.comboLevel);
   }
 
-  // Visual feedback
   animateFine(carEl, result.guadagno);
   screenShake(Math.min(result.comboLevel, 3));
-  if (result.comboLevel >= 2) {
-    spawnParticles(carEl, result.comboLevel);
-  }
+  if (result.comboLevel >= 2) spawnParticles(carEl, result.comboLevel);
   showCombo(result.comboCount, result.comboMultiplier);
   updateHUD();
 
-  // Hide hint on first click
+  // Hide hint
   const hint = document.getElementById('click-hint');
   if (hint) {
     hint.style.opacity = '0';
@@ -155,12 +162,10 @@ function handleCarClick(carEl) {
 function handleUpgradeClick(upgradeId) {
   const bought = buyUpgrade(upgradeId);
   if (!bought) return;
-
   playBuy();
   updateHUD();
   updateUpgrades();
   updateVigili();
-
   const el = document.getElementById('upgrade-' + upgradeId);
   if (el) {
     el.classList.add('just-bought');
@@ -169,12 +174,17 @@ function handleUpgradeClick(upgradeId) {
 }
 
 function handleSagra() {
-  const result = organizzaSagra();
-  if (!result) return;
+  if (!organizzaSagra()) return;
   playSagra();
   showSagra();
   updateHUD();
   updateUpgrades();
+}
+
+function handleRiceviComitato() {
+  if (!riceviComitato()) return;
+  showNews({ text: "Il sindaco riceve il Comitato Commercianti. Rosso parla per venti minuti." });
+  updateHUD();
 }
 
 function handleTorreClick() {
@@ -186,9 +196,8 @@ function handleTorreClick() {
   }
 }
 
-// ----- Random Event Handling -----
+// ----- Random Event -----
 let currentEvent = null;
-
 function handleRandomEvent(event) {
   currentEvent = event;
   showRandomEvent(event);
@@ -198,23 +207,67 @@ function handleEventChoice(choice) {
   if (!currentEvent) return;
   const option = choice === 'a' ? currentEvent.optionA : currentEvent.optionB;
   applyEventChoice(option);
-
-  // Show response
   const responseEl = document.getElementById('event-response');
   responseEl.textContent = option.response;
   responseEl.classList.add('show');
-
-  // Play appropriate sound
-  if (option.vitalita > 0) playSagra();
-  else playSaracinesca();
-
-  // Close modal after delay
+  if (option.vitalita > 0) playSagra(); else playSaracinesca();
   setTimeout(() => {
     document.getElementById('event-modal').classList.remove('active');
     responseEl.classList.remove('show');
     currentEvent = null;
     updateHUD();
   }, 2500);
+}
+
+// ----- Carta Azione -----
+let currentCarta = null;
+function handleCarta(carta) {
+  currentCarta = carta;
+  showCarta(carta);
+}
+
+function handleCartaChoice(choice) {
+  if (!currentCarta) return;
+  const option = choice === 'a' ? currentCarta.optionA : currentCarta.optionB;
+  applyCartaChoice(option.effetto);
+  const responseEl = document.getElementById('carta-response');
+  responseEl.textContent = option.response;
+  responseEl.classList.add('show');
+  playBuy();
+  setTimeout(() => {
+    document.getElementById('carta-modal').classList.remove('active');
+    responseEl.classList.remove('show');
+    currentCarta = null;
+    updateHUD();
+  }, 2500);
+}
+
+// ----- Leaderboard -----
+async function handleSaveRecord() {
+  const nameInput = document.getElementById('end-name');
+  const name = (nameInput.value || '').trim();
+  if (!name) { nameInput.focus(); return; }
+
+  const stats = { ...getState() };
+  const score = calcScore();
+  const ok = await submitScore(name, score, {
+    multe: Math.floor(stats.multeTotali),
+    cassa: stats.cassaTotale,
+    durata: Math.floor((Date.now() - stats.startTime) / 1000),
+  });
+
+  const msg = document.getElementById('record-saved-msg');
+  if (ok) {
+    msg.textContent = 'Record salvato!';
+    msg.style.color = '#27AE60';
+    document.getElementById('btn-save-record').disabled = true;
+    // Refresh leaderboard
+    const entries = await fetchLeaderboard();
+    renderLeaderboard(entries);
+  } else {
+    msg.textContent = 'Errore. Riprova.';
+    msg.style.color = '#E74C3C';
+  }
 }
 
 // ----- Fullone Easter Egg -----
@@ -239,17 +292,14 @@ let lastPedestrianUpdate = 0;
 
 function startGameLoop() {
   stopGameLoop();
-
   gameLoopInterval = setInterval(gameTick, 100);
   saveInterval = setInterval(saveGame, 5000);
-
   autoFineInterval = setInterval(() => {
     const state = getState();
     if (state.multePerSecondo > 0 && !state.sagraAttiva && !state.gameOver) {
       animateAutoFine();
     }
   }, 500);
-
   function renderLoop() {
     updateHUD();
     renderFrame = requestAnimationFrame(renderLoop);
@@ -264,7 +314,7 @@ function stopGameLoop() {
   if (renderFrame) cancelAnimationFrame(renderFrame);
 }
 
-// ----- Closure queue (dramatic, one at a time) -----
+// ----- Closure queue -----
 let closureQueue = [];
 let closureActive = false;
 
@@ -274,24 +324,19 @@ function queueClosure(shop) {
 }
 
 function processNextClosure() {
-  if (closureQueue.length === 0) {
-    closureActive = false;
-    return;
-  }
+  if (closureQueue.length === 0) { closureActive = false; return; }
   closureActive = true;
   const shop = closureQueue.shift();
-
   playSaracinesca();
   animateShopClosure(shop);
   showClosureOverlay(shop);
-
   setTimeout(() => processNextClosure(), 4000);
 }
 
 function gameTick() {
   const result = tick();
 
-  // Shop closures (dramatic queue)
+  // Shop closures
   result.closures.forEach(shop => queueClosure(shop));
 
   // News
@@ -304,15 +349,21 @@ function gameTick() {
   });
 
   // Sichelgaita
-  if (result.sichelgaita) {
-    showSichelgaita();
-    playSichelgaita();
+  if (result.sichelgaita) { showSichelgaita(); playSichelgaita(); }
+
+  // Comitato
+  if (result.comitatoAction) {
+    applyComitatoAction(result.comitatoAction);
+    showComitatoAction(result.comitatoAction);
+    playSaracinesca();
   }
+  if (result.rossoMsg) showRossoMessage(result.rossoMsg);
 
   // Random events
-  if (result.randomEvent && !closureActive) {
-    handleRandomEvent(result.randomEvent);
-  }
+  if (result.randomEvent && !closureActive) handleRandomEvent(result.randomEvent);
+
+  // Carte azione
+  if (result.carta && !closureActive && !currentEvent) handleCarta(result.carta);
 
   updateUpgrades();
   updatePhaseVisuals();
@@ -328,6 +379,10 @@ function gameTick() {
     playGameOver();
     saveGame();
     localStorage.removeItem('multopoli_save');
-    setTimeout(() => showEndScreen(), 2500);
+    setTimeout(async () => {
+      showEndScreen();
+      const entries = await fetchLeaderboard();
+      renderLeaderboard(entries);
+    }, 2500);
   }
 }

@@ -70,6 +70,17 @@
           <span id="hud-mps" class="hud-value">0/s</span>
         </div>
       </div>
+      <div class="hud-item hud-pressione">
+        <span class="hud-icon">&#x270A;</span>
+        <div class="hud-data">
+          <span class="hud-label">Comitato</span>
+          <div class="hud-bar-container">
+            <div id="hud-pressione-fill" class="hud-bar-fill hud-bar-pressione" style="width:0%"></div>
+          </div>
+          <span id="hud-pressione" class="hud-value-small">0</span>
+        </div>
+      </div>
+      <button id="btn-achievements" class="hud-btn" aria-label="Achievement">&#x1F3C6;</button>
     </div>
 
     <!-- Main Content -->
@@ -103,6 +114,10 @@
         <div class="sagra-section">
           <button id="btn-sagra" class="btn btn-sagra" disabled>Organizza Sagra (100 &#x20AC;)</button>
           <span class="sagra-hint">Recupera vitalita, blocca multe per 10s</span>
+        </div>
+        <div class="comitato-section">
+          <button id="btn-comitato" class="btn btn-comitato">Ricevi il Comitato</button>
+          <span class="sagra-hint">Pressione -20%, ma blocca click per 10s</span>
         </div>
       </div>
 
@@ -147,6 +162,42 @@
     <!-- Achievement Container -->
     <div id="achievement-container"></div>
 
+    <!-- Rosso message (WhatsApp style) -->
+    <div id="rosso-message" class="rosso-hidden">
+      <div class="rosso-avatar">R</div>
+      <div class="rosso-bubble">
+        <div class="rosso-name">Rosso — Comitato Commercianti</div>
+        <div id="rosso-text" class="rosso-text"></div>
+      </div>
+    </div>
+
+    <!-- Carta Azione del Sindaco -->
+    <div id="carta-modal">
+      <div class="carta-card">
+        <div class="carta-header">Giornata del Sindaco</div>
+        <div id="carta-titolo" class="carta-titolo"></div>
+        <div id="carta-desc" class="carta-desc"></div>
+        <div class="carta-buttons">
+          <button id="carta-btn-a" class="btn btn-event btn-event-a"></button>
+          <button id="carta-btn-b" class="btn btn-event btn-event-b"></button>
+        </div>
+        <div id="carta-response" class="event-response"></div>
+      </div>
+    </div>
+
+    <!-- Achievement Panel -->
+    <div id="achievement-panel">
+      <div class="ach-panel-header">
+        <h2>Achievement</h2>
+        <div class="ach-progress">
+          <div id="ach-progress-fill" class="ach-progress-fill"></div>
+        </div>
+        <span id="ach-progress-text" class="ach-progress-text">0 / 18</span>
+        <button id="ach-close" class="ach-close">&times;</button>
+      </div>
+      <div id="ach-grid" class="ach-grid"></div>
+    </div>
+
     <!-- Mute button -->
     <button id="btn-mute" class="btn-mute" aria-label="Mute">&#x1F50A;</button>
   </div>
@@ -160,6 +211,15 @@
       <blockquote id="end-quote" class="end-quote">
         "Ma le casse comunali non sono mai state cosi piene."
       </blockquote>
+      <div class="end-record">
+        <input id="end-name" type="text" maxlength="15" placeholder="Il tuo nome..." class="end-name-input">
+        <button id="btn-save-record" class="btn btn-primary">Salva Record</button>
+        <div id="record-saved-msg" class="record-saved-msg"></div>
+      </div>
+      <div id="leaderboard" class="leaderboard">
+        <h3>Classifica</h3>
+        <div id="leaderboard-list"></div>
+      </div>
       <div class="end-buttons">
         <button id="btn-share" class="btn btn-primary btn-share">Condividi su WhatsApp</button>
         <button id="btn-restart" class="btn btn-secondary">Ricomincia</button>

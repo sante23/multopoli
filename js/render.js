@@ -4,7 +4,7 @@
 // ============================================================
 
 import { UPGRADES, SHOPS, PIAZZAS, CAR_COLORS, ACHIEVEMENTS } from './data.js';
-import { getState, getUpgradeCost, getSagraCost, getPhase, getEndStats } from './game.js';
+import { getState, getUpgradeCost, getSagraCost, getPhase, getEndStats, calcScore } from './game.js';
 
 // ----- Cached DOM refs -----
 let els = {};
@@ -305,6 +305,18 @@ export function updateHUD() {
   if (pct > 60) els.hudVitalitaBar.style.backgroundColor = '#27AE60';
   else if (pct > 30) els.hudVitalitaBar.style.backgroundColor = '#F39C12';
   else els.hudVitalitaBar.style.backgroundColor = '#E74C3C';
+
+  // Pressione comitato
+  const presEl = document.getElementById('hud-pressione-fill');
+  const presText = document.getElementById('hud-pressione');
+  if (presEl) {
+    const p = Math.min(100, Math.max(0, s.pressione));
+    presEl.style.width = p + '%';
+    presText.textContent = Math.ceil(p);
+    if (p > 80) presEl.style.backgroundColor = '#E74C3C';
+    else if (p > 50) presEl.style.backgroundColor = '#F39C12';
+    else presEl.style.backgroundColor = '#8B5CF6';
+  }
 }
 
 // ----- Update Upgrades -----
@@ -540,6 +552,7 @@ export function showEndScreen() {
     <div class="stat-row"><span class="stat-label">Sagre organizzate</span><span class="stat-value">${stats.sagre}</span></div>
     <div class="stat-row"><span class="stat-label">Achievements</span><span class="stat-value">${stats.achievements} / ${ACHIEVEMENTS.length}</span></div>
     <div class="stat-row"><span class="stat-label">Durata</span><span class="stat-value">${durStr}</span></div>
+    <div class="stat-row stat-score"><span class="stat-label">PUNTEGGIO</span><span class="stat-value">${formatNumber(stats.score)}</span></div>
   `;
 
   if (stats.hasAlternateEnding) {
@@ -692,4 +705,139 @@ export function updateVigili() {
     const piazza = piazzas[i % piazzas.length];
     if (piazza) piazza.appendChild(v);
   }
+}
+
+// ----- Achievement Panel -----
+export function buildAchievementPanel() {
+  const grid = document.getElementById('ach-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  const s = getState();
+
+  ACHIEVEMENTS.forEach(ach => {
+    const unlocked = s.achievementsSbloccati.includes(ach.id);
+    const card = document.createElement('div');
+    card.className = 'ach-card' + (unlocked ? ' unlocked' : ' locked');
+    card.innerHTML = `
+      <div class="ach-card-icon">${unlocked ? ach.icon : '?'}</div>
+      <div class="ach-card-name">${unlocked ? ach.nome : '???'}</div>
+      <div class="ach-card-desc">${unlocked ? ach.desc : ach.hint}</div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Progress
+  const count = s.achievementsSbloccati.length;
+  const total = ACHIEVEMENTS.length;
+  const fill = document.getElementById('ach-progress-fill');
+  const text = document.getElementById('ach-progress-text');
+  if (fill) fill.style.width = (count / total * 100) + '%';
+  if (text) text.textContent = count + ' / ' + total;
+}
+
+export function toggleAchievementPanel() {
+  const panel = document.getElementById('achievement-panel');
+  if (!panel) return;
+  const isOpen = panel.classList.contains('open');
+  if (isOpen) {
+    panel.classList.remove('open');
+  } else {
+    buildAchievementPanel();
+    panel.classList.add('open');
+  }
+}
+
+// ----- Rosso Message (WhatsApp style) -----
+export function showRossoMessage(msg) {
+  const el = document.getElementById('rosso-message');
+  const text = document.getElementById('rosso-text');
+  if (!el || !text) return;
+
+  text.textContent = msg.text;
+  el.classList.remove('rosso-hidden');
+  el.classList.add('rosso-show');
+
+  setTimeout(() => {
+    el.classList.remove('rosso-show');
+    el.classList.add('rosso-hidden');
+  }, 5000);
+}
+
+// ----- Comitato Action Overlay -----
+export function showComitatoAction(action) {
+  // Reuse closure overlay for dramatic comitato events
+  const overlay = document.getElementById('closure-overlay');
+  const nameEl = document.getElementById('closure-name');
+  const msgEl = document.getElementById('closure-msg');
+  const iconEl = overlay.querySelector('.closure-icon');
+
+  iconEl.textContent = '\u270A';
+  nameEl.textContent = action.nome;
+  msgEl.textContent = action.desc;
+
+  overlay.classList.add('active');
+  setTimeout(() => overlay.classList.remove('active'), 3500);
+}
+
+// ----- Carta Azione -----
+export function showCarta(carta) {
+  const modal = document.getElementById('carta-modal');
+  document.getElementById('carta-titolo').textContent = carta.titolo;
+  document.getElementById('carta-desc').textContent = carta.desc;
+  document.getElementById('carta-btn-a').textContent = carta.optionA.label;
+  document.getElementById('carta-btn-b').textContent = carta.optionB.label;
+  document.getElementById('carta-response').textContent = '';
+  document.getElementById('carta-response').classList.remove('show');
+  modal.classList.add('active');
+}
+
+// ----- Leaderboard -----
+export async function fetchLeaderboard() {
+  try {
+    const res = await fetch('/multopoli/api/leaderboard');
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (e) {
+    return [];
+  }
+}
+
+export async function submitScore(name, score, stats) {
+  try {
+    const res = await fetch('/multopoli/api/leaderboard', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, score, multe: stats.multe, cassa: stats.cassa, durata: stats.durata }),
+    });
+    return res.ok;
+  } catch (e) {
+    return false;
+  }
+}
+
+export function renderLeaderboard(entries) {
+  const list = document.getElementById('leaderboard-list');
+  if (!list) return;
+  if (entries.length === 0) {
+    list.innerHTML = '<div class="lb-empty">Nessun record ancora.</div>';
+    return;
+  }
+  const medals = ['\u{1F947}', '\u{1F948}', '\u{1F949}'];
+  const titles = { 1: 'Sindaco Supremo', 10: 'Assessore alle Finanze', 50: 'Vigile Capo' };
+  list.innerHTML = entries.slice(0, 20).map((e, i) => {
+    const medal = medals[i] || (i + 1);
+    const title = i < 1 ? titles[1] : i < 10 ? titles[10] : titles[50];
+    return `<div class="lb-row${i < 3 ? ' lb-top' : ''}">
+      <span class="lb-rank">${medal}</span>
+      <span class="lb-name">${escapeHtml(e.name)}</span>
+      <span class="lb-score">${formatNumber(e.score)}</span>
+      <span class="lb-title">${title || ''}</span>
+    </div>`;
+  }).join('');
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
 }

@@ -1812,6 +1812,309 @@ html, body {
   border-radius: 1px;
 }
 
+/* ============================================================
+   V3 — ACHIEVEMENT PANEL, COMITATO, CARTE, LEADERBOARD
+   ============================================================ */
+
+/* ----- HUD Achievement button ----- */
+.hud-btn {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform 0.2s;
+}
+.hud-btn:hover { transform: scale(1.2); }
+
+/* ----- Pressione bar ----- */
+.hud-bar-pressione {
+  background: #8B5CF6;
+}
+
+/* ----- ACHIEVEMENT PANEL ----- */
+#achievement-panel {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(26, 26, 46, 0.97);
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+#achievement-panel.open {
+  transform: translateY(0);
+}
+
+.ach-panel-header {
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.ach-panel-header h2 {
+  color: #FFD700;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+.ach-progress {
+  flex: 1;
+  min-width: 100px;
+  height: 8px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ach-progress-fill {
+  height: 100%;
+  background: #FFD700;
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+.ach-progress-text {
+  color: #9CA3AF;
+  font-size: 0.8rem;
+}
+.ach-close {
+  background: none;
+  border: none;
+  color: #9CA3AF;
+  font-size: 1.8rem;
+  cursor: pointer;
+  line-height: 1;
+  margin-left: auto;
+}
+.ach-close:hover { color: #FFF; }
+
+.ach-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.8rem;
+  padding: 1rem 1.5rem;
+}
+
+.ach-card {
+  padding: 0.8rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.ach-card.unlocked {
+  background: rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+.ach-card.locked {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.ach-card:hover { transform: translateY(-2px); }
+.ach-card-icon { font-size: 2rem; margin-bottom: 0.4rem; }
+.ach-card.locked .ach-card-icon { filter: grayscale(1); opacity: 0.3; }
+.ach-card-name { font-size: 0.8rem; font-weight: 700; color: #F3F4F6; margin-bottom: 0.2rem; }
+.ach-card.locked .ach-card-name { color: #6B7280; }
+.ach-card-desc { font-size: 0.65rem; color: #9CA3AF; font-style: italic; }
+.ach-card.locked .ach-card-desc { color: #4B5563; }
+
+/* ----- ROSSO MESSAGE ----- */
+#rosso-message {
+  position: fixed;
+  bottom: 50px;
+  left: 10px;
+  right: 10px;
+  max-width: 400px;
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  z-index: 45;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.rosso-hidden {
+  transform: translateX(-110%);
+  opacity: 0;
+}
+.rosso-show {
+  transform: translateX(0);
+  opacity: 1;
+}
+.rosso-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #C0392B;
+  color: #FFF;
+  font-weight: 900;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.rosso-bubble {
+  background: #DCF8C6;
+  border-radius: 0 12px 12px 12px;
+  padding: 0.5rem 0.8rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  max-width: 320px;
+}
+.rosso-name {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #C0392B;
+  margin-bottom: 0.2rem;
+}
+.rosso-text {
+  font-size: 0.8rem;
+  color: #2D2D2D;
+  line-height: 1.4;
+}
+
+/* ----- CARTA AZIONE MODAL ----- */
+#carta-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0);
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: background 0.3s;
+}
+#carta-modal.active {
+  background: rgba(0,0,0,0.6);
+  pointer-events: auto;
+}
+.carta-card {
+  background: #FAF5EF;
+  border-radius: 12px;
+  padding: 1.5rem;
+  max-width: 380px;
+  width: 90%;
+  text-align: center;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.3s;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  border-top: 4px solid #8B5CF6;
+}
+#carta-modal.active .carta-card {
+  transform: translateY(0);
+  opacity: 1;
+}
+.carta-header {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8B5CF6;
+  margin-bottom: 0.5rem;
+}
+.carta-titolo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2D2D2D;
+  margin-bottom: 0.5rem;
+}
+.carta-desc {
+  font-size: 0.85rem;
+  color: #6B7280;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+.carta-buttons {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+/* ----- COMITATO BUTTON ----- */
+.comitato-section {
+  padding: 0.5rem 0.8rem;
+  text-align: center;
+}
+.btn-comitato {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 2px solid #8B5CF6;
+  background: white;
+  color: #8B5CF6;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-comitato:hover {
+  background: #8B5CF6;
+  color: white;
+}
+
+/* ----- LEADERBOARD ----- */
+.leaderboard {
+  margin: 1rem 0;
+  max-height: 250px;
+  overflow-y: auto;
+}
+.leaderboard h3 {
+  color: #FFD700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+.lb-row {
+  display: flex;
+  align-items: center;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+.lb-top { color: #FFD700; }
+.lb-rank { width: 30px; text-align: center; }
+.lb-name { flex: 1; color: #F3F4F6; font-weight: 600; }
+.lb-score { color: #F39C12; font-weight: 700; font-variant-numeric: tabular-nums; }
+.lb-title { font-size: 0.6rem; color: #6B7280; font-style: italic; }
+.lb-empty { color: #6B7280; font-style: italic; font-size: 0.8rem; }
+
+/* ----- END SCREEN extras ----- */
+.end-record {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.end-name-input {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  color: #F3F4F6;
+  font-size: 0.9rem;
+  width: 150px;
+  outline: none;
+}
+.end-name-input:focus {
+  border-color: #FFD700;
+}
+.record-saved-msg {
+  font-size: 0.8rem;
+  width: 100%;
+  text-align: center;
+}
+.stat-score {
+  border-top: 2px solid rgba(255,215,0,0.3);
+  margin-top: 0.3rem;
+  padding-top: 0.5rem;
+}
+.stat-score .stat-label { color: #FFD700; font-weight: 700; }
+.stat-score .stat-value { color: #FFD700; font-size: 1.1rem; }
+
 /* ----- Accessibility: reduce motion ----- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

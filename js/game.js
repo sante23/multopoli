@@ -3,7 +3,7 @@
 // State management, game logic, save/load
 // ============================================================
 
-import { UPGRADES, SHOPS, NEWS, ACHIEVEMENTS } from './data.js';
+import { UPGRADES, SHOPS, NEWS, ACHIEVEMENTS, ROSSO_MESSAGES, COMITATO_ACTIONS, CARTE_AZIONE } from './data.js';
 
 // ----- Initial State -----
 function createInitialState() {
@@ -37,6 +37,21 @@ function createInitialState() {
     // Random events
     lastEventTime: 0,
     eventsSeen: 0,
+    // Comitato di Resistenza
+    pressione: 0,
+    lastRossoTime: 0,
+    comitatoAzioniViste: [],
+    comitatoBlockFine: 0,
+    multeSlowdown: 1,
+    multeSlowdownFine: 0,
+    // Carte Azione
+    lastCartaTime: 0,
+    carteSeen: 0,
+    // Bonus temporanei
+    multeBonus: 1,
+    multeBonusFine: 0,
+    upgradeSconto: 0,
+    blockClicksFine: 0,
   };
 }
 
@@ -58,7 +73,12 @@ export function getUpgradeCost(upgradeId) {
   const def = UPGRADES.find(u => u.id === upgradeId);
   if (!def) return Infinity;
   const owned = state.upgrades[upgradeId] || 0;
-  return Math.floor(def.costoBase * Math.pow(1.15, owned));
+  let cost = Math.floor(def.costoBase * Math.pow(1.15, owned));
+  if (state.upgradeSconto > 0) {
+    cost = Math.floor(cost * (1 - state.upgradeSconto));
+    state.upgradeSconto = 0; // one-time
+  }
+  return cost;
 }
 
 // ----- Sagra Cost -----
@@ -80,6 +100,7 @@ export function recalcMPS() {
 export function doClick() {
   if (state.gameOver) return null;
   if (state.sagraAttiva) return null;
+  if (Date.now() < state.blockClicksFine) return null;
 
   const now = Date.now();
 
@@ -328,40 +349,153 @@ function checkSichelgaita(now) {
   return true;
 }
 
+// ----- Comitato Pressione -----
+function checkComitato(now) {
+  // Pressione increases with MPS
+  if (state.multePerSecondo > 0) {
+    state.pressione = Math.min(100, state.pressione + state.multePerSecondo * 0.0003);
+  }
+  // Natural decay
+  state.pressione = Math.max(0, state.pressione - 0.01);
+
+  // Check comitato actions at thresholds
+  let comitatoAction = null;
+  for (const action of COMITATO_ACTIONS) {
+    if (state.pressione >= action.soglia && !state.comitatoAzioniViste.includes(action.tipo)) {
+      state.comitatoAzioniViste.push(action.tipo);
+      comitatoAction = action;
+      break;
+    }
+  }
+
+  // Rosso message
+  let rossoMsg = null;
+  if (now - state.lastRossoTime > 25000 && state.pressione > 5) {
+    if (Math.random() < 0.003) {
+      const available = ROSSO_MESSAGES.filter(m =>
+        state.pressione >= m.minPress && state.pressione <= m.maxPress
+      );
+      if (available.length > 0) {
+        rossoMsg = available[Math.floor(Math.random() * available.length)];
+        state.lastRossoTime = now;
+      }
+    }
+  }
+
+  // Apply comitato block/slowdown expiry
+  if (state.comitatoBlockFine > 0 && now >= state.comitatoBlockFine) {
+    state.comitatoBlockFine = 0;
+  }
+  if (state.multeSlowdownFine > 0 && now >= state.multeSlowdownFine) {
+    state.multeSlowdown = 1;
+    state.multeSlowdownFine = 0;
+  }
+  if (state.multeBonusFine > 0 && now >= state.multeBonusFine) {
+    state.multeBonus = 1;
+    state.multeBonusFine = 0;
+  }
+
+  return { comitatoAction, rossoMsg };
+}
+
+export function riceviComitato() {
+  if (state.gameOver) return false;
+  state.pressione = Math.max(0, state.pressione - 20);
+  state.blockClicksFine = Date.now() + 10000;
+  return true;
+}
+
+export function applyComitatoAction(action) {
+  const now = Date.now();
+  if (action.effetto === 'slowdown') {
+    state.multeSlowdown = 0.7;
+    state.multeSlowdownFine = now + 20000;
+  } else if (action.effetto === 'block') {
+    state.comitatoBlockFine = now + 20000;
+  } else if (action.effetto === 'shutdown') {
+    state.comitatoBlockFine = now + 30000;
+  }
+}
+
+// ----- Carte Azione -----
+function checkCarta(now) {
+  if (state.gameOver) return null;
+  if (state.multeTotali < 10) return null;
+  if (now - state.lastCartaTime < 60000) return null; // Every 60s
+
+  // ~3% chance per tick
+  if (Math.random() > 0.003) return null;
+
+  state.lastCartaTime = now;
+  const idx = state.carteSeen % CARTE_AZIONE.length;
+  state.carteSeen++;
+  return CARTE_AZIONE[idx];
+}
+
+export function applyCartaChoice(effetto) {
+  const now = Date.now();
+  if (effetto.cassa) { state.cassa += effetto.cassa; state.cassaTotale += Math.max(0, effetto.cassa); }
+  if (effetto.vitalita) state.vitalita = Math.max(0, Math.min(100, state.vitalita + effetto.vitalita));
+  if (effetto.pressione) state.pressione = Math.max(0, Math.min(100, state.pressione + effetto.pressione));
+  if (effetto.multeBonus) { state.multeBonus = effetto.multeBonus; state.multeBonusFine = now + (effetto.durata || 15) * 1000; }
+  if (effetto.blockMulte) state.comitatoBlockFine = now + effetto.blockMulte * 1000;
+  if (effetto.upgradeSconto) state.upgradeSconto = effetto.upgradeSconto;
+}
+
+// ----- Score Calculation -----
+export function calcScore() {
+  const s = state;
+  const durata = Math.max(1, (Date.now() - s.startTime) / 1000);
+  return Math.floor(
+    Math.floor(s.multeTotali) * 1 +
+    s.cassaTotale * 0.001 +
+    (100 / durata) * 100 +
+    s.achievementsSbloccati.length * 50 +
+    (10 - s.negoziChiusi.length) * 200
+  );
+}
+
 // ----- Main Tick -----
 export function tick() {
-  if (state.gameOver) return { closures: [], news: null, achievements: [], sichelgaita: false, gameOver: false };
+  if (state.gameOver) return { closures: [], news: null, achievements: [], sichelgaita: false, gameOver: false, comitatoAction: null, rossoMsg: null, carta: null, randomEvent: null };
 
   const now = Date.now();
-  const deltaMs = Math.min(now - state.lastTick, 1000); // Cap delta to 1s
+  const deltaMs = Math.min(now - state.lastTick, 1000);
   state.lastTick = now;
-
   const deltaSec = deltaMs / 1000;
 
-  // Check sagra expiry
+  // Sagra expiry
   if (state.sagraAttiva && now >= state.sagraFine) {
     state.sagraAttiva = false;
   }
 
-  // Auto-generate fines (if no sagra active)
-  if (!state.sagraAttiva && state.multePerSecondo > 0) {
-    const multe = state.multePerSecondo * deltaSec;
+  // Auto-generate fines
+  const blocked = state.sagraAttiva || (state.comitatoBlockFine > 0 && now < state.comitatoBlockFine);
+  if (!blocked && state.multePerSecondo > 0) {
+    const effectiveMPS = state.multePerSecondo * state.multeSlowdown * state.multeBonus;
+    const multe = effectiveMPS * deltaSec;
     const guadagno = multe * 5;
     state.cassa += guadagno;
     state.cassaTotale += guadagno;
     state.multeTotali += multe;
 
-    // Vitality decay
-    const decay = calcDecay(state.multePerSecondo, state.vitalita);
+    // Pressione from auto-fines
+    state.pressione = Math.min(100, state.pressione + multe * 0.002);
+
+    const decay = calcDecay(effectiveMPS, state.vitalita);
     state.vitalita = Math.max(0, state.vitalita - decay * deltaSec);
   }
 
-  // Check events
+  // Comitato
+  const { comitatoAction, rossoMsg } = checkComitato(now);
+
+  // Events
   const closures = checkShopClosures();
   const news = checkNews(now);
   const achievements = checkAchievements();
   const sichelgaita = checkSichelgaita(now);
   const randomEvent = checkRandomEvent(now);
+  const carta = checkCarta(now);
 
   // Game over
   if (state.vitalita <= 0 && !state.gameOver) {
@@ -369,10 +503,10 @@ export function tick() {
     state.vitalita = 0;
     const finalAch = checkAchievements();
     achievements.push(...finalAch);
-    return { closures, news, achievements, sichelgaita, randomEvent: null, gameOver: true };
+    return { closures, news, achievements, sichelgaita, randomEvent: null, gameOver: true, comitatoAction: null, rossoMsg: null, carta: null };
   }
 
-  return { closures, news, achievements, sichelgaita, randomEvent, gameOver: false };
+  return { closures, news, achievements, sichelgaita, randomEvent, gameOver: false, comitatoAction, rossoMsg, carta };
 }
 
 // ----- Save / Load -----
@@ -424,5 +558,6 @@ export function getEndStats() {
     achievements: state.achievementsSbloccati.length,
     durata: Math.floor((Date.now() - state.startTime) / 1000),
     hasAlternateEnding: state.sagreOrganizzate >= 3,
+    score: calcScore(),
   };
 }
