@@ -1013,7 +1013,7 @@ html, body {
   position: fixed;
   bottom: 0;
   left: 0;
-  right: 0;
+  right: 260px; /* Don't overlap upgrade sidebar on desktop */
   background: rgba(26, 26, 46, 0.95);
   color: #F3F4F6;
   padding: 0.5rem 1rem;
@@ -1409,8 +1409,29 @@ html, body {
 
   #news-ticker {
     bottom: 42px;
+    right: 0; /* Full width on mobile */
     font-size: 0.75rem;
     padding: 0.4rem 0.8rem;
+  }
+
+  #rosso-message {
+    bottom: 90px; /* Above toggle + news */
+    max-width: 85vw;
+  }
+
+  .btn-mute {
+    bottom: auto;
+    right: 5px;
+    top: 50px;
+  }
+
+  .hud-pressione {
+    display: none; /* Hide pressure bar on very small screens, show via toggle */
+  }
+
+  #combo-display {
+    top: 45px;
+    font-size: 1.2rem;
   }
 }
 
@@ -1774,10 +1795,10 @@ html, body {
 /* ----- MUTE BUTTON ----- */
 .btn-mute {
   position: fixed;
-  top: 5px;
-  right: 10px;
+  bottom: 8px;
+  right: 268px; /* Next to upgrade panel */
   z-index: 25;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.4);
   border: none;
   border-radius: 50%;
   width: 32px;
@@ -1792,7 +1813,7 @@ html, body {
 }
 
 .btn-mute:hover {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.6);
 }
 
 /* ----- BIGGER CARS ----- */
@@ -1818,18 +1839,24 @@ html, body {
 
 /* ----- HUD Achievement button ----- */
 .hud-btn {
-  background: none;
-  border: none;
-  font-size: 1.3rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,215,0,0.3);
+  font-size: 1.1rem;
   cursor: pointer;
-  padding: 4px;
-  transition: transform 0.2s;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: transform 0.2s, background 0.2s;
+  color: #FFD700;
+  margin-left: 4px;
 }
-.hud-btn:hover { transform: scale(1.2); }
+.hud-btn:hover { transform: scale(1.1); background: rgba(255,215,0,0.15); }
 
 /* ----- Pressione bar ----- */
 .hud-bar-pressione {
   background: #8B5CF6;
+}
+.hud-pressione .hud-bar-container {
+  width: 60px;
 }
 
 /* ----- ACHIEVEMENT PANEL ----- */
@@ -1924,8 +1951,8 @@ html, body {
   position: fixed;
   bottom: 50px;
   left: 10px;
-  right: 10px;
-  max-width: 400px;
+  right: auto; /* Don't stretch to sidebar */
+  max-width: 360px;
   display: flex;
   gap: 0.5rem;
   align-items: flex-start;
