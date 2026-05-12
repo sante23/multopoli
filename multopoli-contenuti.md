@@ -168,6 +168,8 @@ Appaiono ogni ~45 secondi. Il giocatore sceglie tra opzione A (altruista) e opzi
 - "Comitato cittadini chiede chiarimenti al Consiglio. Ignorato."
 - "Il comandante: 'Stiamo solo applicando il regolamento.'"
 - "ZTL temporanea in Piazza Umberto I durante la processione."
+- "Turista svizzero multato in piazza: 'Ho portato la cioccolata e m'anu multatu! Me ne torno in Svizzera!'"
+- "Multato un passante con la carriola piena di fichi. Infrazione: veicolo non immatricolato."
 
 ### Fase 2 — Prime chiusure (vit 85-60)
 - "Storica Edicola Manfredi chiude dopo 40 anni."
@@ -179,6 +181,9 @@ Appaiono ogni ~45 secondi. Il giocatore sceglie tra opzione A (altruista) e opzi
 - "Inaugurato nuovo parcheggio multipiano. A 3 km dal centro storico."
 - "Diocesi preoccupata: visite al Convento dei Riformati dimezzate."
 - "La Pro Loco: 'Stiamo lavorando.' (Bilancio annuale a -82%)"
+- "Asinello legato in Piazza Selvaggi multato per divieto di sosta. Il proprietario: 'Ma e' un asino!'"
+- "Tre capre dalla Motta bloccano il Corso. Il vigile non sa a chi intestare il verbale."
+- "Sedia a rotelle multata sulle strisce blu. Il video fa il giro d'Italia."
 
 ### Fase 3 — Meta partita (vit 60-35)
 - "Frantoio Bruzio DOP chiude."
@@ -191,6 +196,10 @@ Appaiono ogni ~45 secondi. Il giocatore sceglie tra opzione A (altruista) e opzi
 - "Mostra fotografica 'San Marco com'era' in Villa Comunale. Nessun visitatore."
 - "Macelleria Le Carni del Pollino chiude."
 - "Bilancio comunale in attivo per la prima volta dal 1985."
+- "Bambino multato per aver lasciato la bici al palo della sosta. La mamma fa un video virale."
+- "Due vecchietti multati per 'occupazione abusiva di stallo' con un tavolo da briscola."
+- "Il pizzaiolo non consegna piu' in centro. 'Ogni consegna mi costa una multa.'"
+- "Contadino multato col trattore in piazza. 'L'anno prossimo le olive le portu a Roggiano.'"
 
 ### Fase 4 — Crisi profonda (vit 35-15)
 - "Trattoria 'U' Guiscardo' chiude. Ultimo piatto: pasta e patate."
@@ -203,6 +212,9 @@ Appaiono ogni ~45 secondi. Il giocatore sceglie tra opzione A (altruista) e opzi
 - "ISTAT: San Marco sotto i 6.000 abitanti per la prima volta dal 1861."
 - "Gelateria Sichelgaita chiude. 'Pure Sichelgaita s'e' scocciata.'"
 - "Parrucchiere Tony saluta: 'Vado a Cosenza.'"
+- "Camper tedesco di 9 metri bloccato in Via Roberto il Guiscardo. Il navigatore diceva 'strada percorribile'."
+- "Un gatto randagio dorme su uno stallo a pagamento. Il vigile valuta il verbale."
+- "Famiglia in partenza multata col furgone trasloco. 'Pure l'ultima multa. Grazie di tutto, sinda'.'"
 
 ### Fase 5 — Fantasma (vit sotto 15)
 - "Serenata in dialetto sotto il municipio. Cinque presenti, tutti vigili."
@@ -215,6 +227,8 @@ Appaiono ogni ~45 secondi. Il giocatore sceglie tra opzione A (altruista) e opzi
 - "L'ultimo abitante lascia il paese. 'Almeno mo parcheggio dove voglio.'"
 - "Sindaco resta in carica. 'Qualcuno deve amministrare.'"
 - "Le casse sono piene. Non c'e' nessuno da servire."
+- "L'unico essere vivente in centro e' un gatto. Multato."
+- "Il vigile multa la propria auto di servizio per errore. Nessuno ride."
 
 ### Fase 6 — Finale (vit = 0)
 - "San Marco premiato a Bruxelles: 'Modello di efficienza amministrativa.'"
