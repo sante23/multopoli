@@ -268,7 +268,7 @@ export const CARTE_AZIONE = [
     titolo: 'Richiesta dalla Diocesi',
     desc: 'Il vescovo chiede parcheggio libero per la messa della domenica.',
     optionA: { label: 'Concedi', effetto: { vitalita: 6, pressione: -10 }, response: 'La messa e\' piena. Il vescovo prega anche per te.' },
-    optionB: { label: 'Regolamento!', effetto: { cassa: 200, pressione: 15 }, response: '"Pure 'u Padreterno paga 'a sosta!" commenta Rosso.' },
+    optionB: { label: 'Regolamento!', effetto: { cassa: 200, pressione: 15 }, response: '"Pure \'u Padreterno paga \'a sosta!" commenta Rosso.' },
   },
   {
     titolo: 'Gita a Cosenza',
