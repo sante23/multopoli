@@ -3,8 +3,8 @@
 // DOM updates, animations, visual degradation
 // ============================================================
 
-import { UPGRADES, SHOPS, PIAZZAS, CAR_COLORS, ACHIEVEMENTS, MONUMENTI } from './data.js';
-import { getState, getUpgradeCost, getSagraCost, getPhase, getEndStats, calcScore } from './game.js';
+import { UPGRADES, SHOPS, PIAZZAS, CAR_COLORS, ACHIEVEMENTS, MONUMENTI, ROSSO_UPGRADE_REACTIONS } from './data.js';
+import { getState, getUpgradeCost, getSagraCost, getPhase, getEndStats, calcScore, checkSfide, getProfile, getPlayerTitle } from './game.js';
 
 // ----- Cached DOM refs -----
 let els = {};
@@ -325,6 +325,16 @@ export function updateHUD() {
     if (p > 50) presEl.classList.add('pulsing');
     else presEl.classList.remove('pulsing');
   }
+
+  // Negozi aperti
+  const negoziEl = document.getElementById('hud-negozi');
+  if (negoziEl) {
+    const aperti = SHOPS.length - s.negoziChiusi.length;
+    negoziEl.textContent = aperti + '/' + SHOPS.length;
+    if (aperti <= 3) negoziEl.style.color = '#E74C3C';
+    else if (aperti <= 6) negoziEl.style.color = '#F39C12';
+    else negoziEl.style.color = '';
+  }
 }
 
 // ----- Update Upgrades -----
@@ -570,6 +580,21 @@ export function showEndScreen() {
     els.endTitle.textContent = 'HAI VINTO';
     els.endQuote.textContent = 'Ma le casse comunali non sono mai state cosi piene.';
   }
+
+  // Sfide
+  const sfideEl = document.getElementById('end-sfide');
+  const sfide = checkSfide();
+  if (sfide.length > 0) {
+    sfideEl.innerHTML = '<div class="sfide-title">Sfide</div>' + sfide.map(s =>
+      `<div class="sfida-row ${s.completata ? 'sfida-ok' : 'sfida-fail'}"><span>${s.completata ? '\u2705' : '\u274C'}</span> <span>${s.nome}</span> <span class="sfida-desc">${s.desc}</span></div>`
+    ).join('');
+  }
+
+  // Profilo
+  const profile = getProfile();
+  const title = getPlayerTitle();
+  const profileEl = document.getElementById('end-profile');
+  profileEl.innerHTML = `<div class="profile-title">${title}</div><div class="profile-stats">Partita #${profile.partite} | Best: ${formatNumber(profile.bestScore)} | Achievement totali: ${profile.allAchievements.length}/${ACHIEVEMENTS.length}</div>`;
 }
 
 // ----- Screen Management -----
@@ -842,6 +867,32 @@ export function renderLeaderboard(entries) {
       <span class="lb-title">${title || ''}</span>
     </div>`;
   }).join('');
+}
+
+// ----- News Log Panel -----
+export function toggleNewsLog() {
+  const panel = document.getElementById('newslog-panel');
+  const isOpen = panel.classList.contains('open');
+  if (isOpen) {
+    panel.classList.remove('open');
+  } else {
+    const list = document.getElementById('newslog-list');
+    const s = getState();
+    if (s.newsLog.length === 0) {
+      list.innerHTML = '<div class="newslog-empty">Nessuna notizia ancora.</div>';
+    } else {
+      list.innerHTML = s.newsLog.map((n, i) => `<div class="newslog-item">${n}</div>`).join('');
+      list.scrollTop = list.scrollHeight;
+    }
+    panel.classList.add('open');
+  }
+}
+
+// ----- Rosso Upgrade Reaction -----
+export function showRossoUpgradeReaction(upgradeId) {
+  const text = ROSSO_UPGRADE_REACTIONS[upgradeId];
+  if (!text) return;
+  showRossoMessage({ text });
 }
 
 function escapeHtml(str) {

@@ -7,7 +7,7 @@ import {
   getState, resetState, tick, doClick, buyUpgrade, organizzaSagra,
   loadGame, saveGame, hasSave, recalcMPS, applyEventChoice,
   riceviComitato, applyComitatoAction, applyCartaChoice, calcScore,
-  scopriMonumento
+  scopriMonumento, assignSfide, updateProfile, addNewsLog
 } from './game.js';
 
 import {
@@ -20,7 +20,7 @@ import {
   showClosureOverlay, showRandomEvent, updateVigili,
   toggleAchievementPanel, showRossoMessage, showComitatoAction,
   showCarta, fetchLeaderboard, submitScore, renderLeaderboard,
-  showMonumentoPanel, hideMonumentoPanel
+  showMonumentoPanel, hideMonumentoPanel, toggleNewsLog, showRossoUpgradeReaction
 } from './render.js';
 
 import { MONUMENTI } from './data.js';
@@ -75,6 +75,8 @@ function setupGlobalEvents() {
   // Achievement panel
   document.getElementById('btn-achievements').addEventListener('click', toggleAchievementPanel);
   document.getElementById('ach-close').addEventListener('click', toggleAchievementPanel);
+  document.getElementById('btn-newslog').addEventListener('click', toggleNewsLog);
+  document.getElementById('newslog-close').addEventListener('click', toggleNewsLog);
 
   // Monumento panel close
   document.getElementById('monumento-close').addEventListener('click', hideMonumentoPanel);
@@ -127,6 +129,8 @@ function startGame() {
   buildUpgradePanel();
   recalcMPS();
   applySavedState();
+  const s = getState();
+  if (s.sfideAssegnate.length === 0) assignSfide();
   startGameLoop();
   updateHUD();
   updateUpgrades();
@@ -175,6 +179,7 @@ function handleUpgradeClick(upgradeId) {
   updateHUD();
   updateUpgrades();
   updateVigili();
+  showRossoUpgradeReaction(upgradeId);
   const el = document.getElementById('upgrade-' + upgradeId);
   if (el) {
     el.classList.add('just-bought');
@@ -370,7 +375,10 @@ function gameTick() {
   result.closures.forEach(shop => queueClosure(shop));
 
   // News
-  if (result.news) showNews(result.news);
+  if (result.news) {
+    showNews(result.news);
+    addNewsLog(result.news.text);
+  }
 
   // Achievements
   result.achievements.forEach(ach => {
@@ -407,6 +415,7 @@ function gameTick() {
   if (result.gameOver) {
     stopGameLoop();
     playGameOver();
+    updateProfile();
     saveGame();
     localStorage.removeItem('multopoli_save');
     setTimeout(async () => {

@@ -2326,6 +2326,114 @@ html, body {
   animation: pressurePulse 1s ease-in-out infinite;
 }
 
+/* ----- CHIUSO label piu' visibile ----- */
+.building.closed .chiuso-label {
+  opacity: 1;
+  font-size: 0.55rem;
+  padding: 3px 6px;
+  background: #DC2626;
+  box-shadow: 0 1px 4px rgba(220,38,38,0.4);
+  z-index: 5;
+}
+
+/* ----- NEWS LOG PANEL ----- */
+#newslog-panel {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(26, 26, 46, 0.97);
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+#newslog-panel.open { transform: translateY(0); }
+.newslog-header {
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.newslog-header h2 { color: #9DD9F3; font-size: 1rem; letter-spacing: 2px; }
+.newslog-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.5rem;
+}
+.newslog-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  color: #D1D5DB;
+  font-size: 0.8rem;
+  font-style: italic;
+  line-height: 1.4;
+}
+.newslog-item:last-child { border-bottom: none; }
+.newslog-empty { color: #6B7280; font-style: italic; }
+
+/* ----- SFIDE END SCREEN ----- */
+.end-sfide {
+  margin: 0.8rem 0;
+  text-align: left;
+}
+.sfide-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #9CA3AF;
+  margin-bottom: 0.4rem;
+}
+.sfida-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0;
+  font-size: 0.8rem;
+}
+.sfida-ok { color: #27AE60; }
+.sfida-fail { color: #6B7280; }
+.sfida-desc {
+  font-size: 0.65rem;
+  color: #6B7280;
+  font-style: italic;
+  margin-left: auto;
+}
+
+/* ----- PROFILO END SCREEN ----- */
+.end-profile {
+  margin: 0.5rem 0;
+  text-align: center;
+}
+.profile-title {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #8B5CF6;
+  letter-spacing: 1px;
+}
+.profile-stats {
+  font-size: 0.7rem;
+  color: #6B7280;
+  margin-top: 0.2rem;
+}
+
+/* ----- HUD negozi ----- */
+.hud-negozi .hud-value-small {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ----- Mobile fixes for new elements ----- */
+@media (max-width: 768px) {
+  .hud-negozi { display: none; }
+  .hud-btn { font-size: 0.9rem; padding: 3px 6px; }
+  #newslog-panel .newslog-header { padding: 0.8rem 1rem; }
+  .monumento-card { padding: 1.2rem; }
+  .monumento-nome { font-size: 1.1rem; }
+  .monumento-storia { font-size: 0.8rem; }
+  .end-sfide, .end-profile { text-align: center; }
+  .sfida-desc { display: none; }
+}
+
 /* ----- Accessibility: reduce motion ----- */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

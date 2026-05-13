@@ -338,6 +338,54 @@ export const MONUMENTI = [
   },
 ];
 
+// ============================================================
+// REAZIONI DI ROSSO AGLI UPGRADE
+// ============================================================
+
+export const ROSSO_UPGRADE_REACTIONS = {
+  vigileJunior:     "'U cuginu d'u sindacu. Classico clientelismo. Gramsci si rivolta nella tomba.",
+  vigileSenior:     "Trent'anni di servizio e zero coscienza. 'U sistema se li mangia.",
+  motorino:         "Mo' arrivano pure in motorino! Mancu a piedi puoi camminare tranquillu.",
+  panda:            "Ecco 'a Panda! L'unica macchina ca non piglia mai 'a multa.",
+  autovelox:        "'U autovelox! Ppe' la sicurezza, dicono. Ppe' 'a cassa, sai tu.",
+  ztl:              "Telecamere! Grande Fratello a San Marco. Orwell aveva ragione, sinda'.",
+  drone:            "Mo' ci mandate pure i droni! Pare l'Iraq! Manca solo 'a bomba!",
+  aiArgo:           "'A intelligenza artificiale! Quella naturale l'avete persa da tempo.",
+  vigilePredittivo: "Ti multa PRIMA che parcheggi. Minority Report a San Marco. Siamo arrivati.",
+};
+
+// ============================================================
+// SFIDE RANDOM (3 per partita, replayability)
+// ============================================================
+
+export const SFIDE = [
+  { id: 'ecologista',    nome: 'Ecologista',           desc: 'Non comprare mai l\'Autovelox',                check: (s) => !s.upgrades.autovelox },
+  { id: 'pacifista',     nome: 'Pacifista',             desc: 'Organizza almeno 5 sagre',                    check: (s) => s.sagreOrganizzate >= 5 },
+  { id: 'velocista',     nome: 'Velocista',             desc: 'Finisci in meno di 5 minuti',                 check: (s) => (Date.now() - s.startTime) / 1000 < 300 },
+  { id: 'risparmiatore', nome: 'Risparmiatore',         desc: 'Non superare mai 50.000 EUR in cassa',        check: (s) => s.cassaTotale < 50000 },
+  { id: 'amico_rosso',   nome: 'Amico di Rosso',        desc: 'Tieni la pressione sotto 30 per tutta la partita', check: (s) => s._maxPressione < 30 },
+  { id: 'distruttore',   nome: 'Distruttore',           desc: 'Chiudi tutti i negozi in meno di 8 minuti',  check: (s) => s.negoziChiusi.length >= 10 && (Date.now() - s.startTime) / 1000 < 480 },
+  { id: 'equilibrista',  nome: 'Equilibrista',          desc: 'Finisci con vitalita\' tra 1 e 10',          check: (s) => false },
+  { id: 'archeologo',    nome: 'Archeologo',            desc: 'Scopri tutti e 4 i monumenti',               check: (s) => s.monumentiScoperti.length >= 4 },
+  { id: 'combo_master',  nome: 'Combo Master',          desc: 'Raggiungi combo x5',                         check: (s) => s._maxCombo >= 5 },
+  { id: 'diplomatico',   nome: 'Diplomatico',           desc: 'Ricevi il Comitato almeno 3 volte',          check: (s) => s._comitatoRicevuto >= 3 },
+  { id: 'no_sagra',      nome: 'Cuore di Pietra',       desc: 'Vinci senza mai organizzare una sagra',      check: (s) => s.sagreOrganizzate === 0 },
+  { id: 'milionario',    nome: 'Milionario',            desc: 'Accumula 1 milione di EUR',                  check: (s) => s.cassaTotale >= 1000000 },
+];
+
+// ============================================================
+// TITOLI GIOCATORE (profilo persistente)
+// ============================================================
+
+export const TITOLI = [
+  { id: 'distruttore',  nome: 'Il Distruttore',       cond: (p) => p.partite >= 3 && p.mediaVitalitaFinale < 5 },
+  { id: 'equilibrato',  nome: 'L\'Equilibrato',       cond: (p) => p.partite >= 3 && p.sagreTotali >= 5 },
+  { id: 'amico_rosso',  nome: 'L\'Amico di Rosso',    cond: (p) => p.partite >= 2 && p.comitatoRicevutoTotale >= 5 },
+  { id: 'veterano',     nome: 'Il Veterano',          cond: (p) => p.partite >= 10 },
+  { id: 'archeologo',   nome: 'L\'Archeologo',        cond: (p) => p.monumentiTotali >= 4 },
+  { id: 'novizio',      nome: 'Novizio',              cond: () => true }, // default
+];
+
 // Car colors for visual variety
 export const CAR_COLORS = [
   '#C0392B', '#2980B9', '#27AE60', '#F39C12', '#8E44AD',

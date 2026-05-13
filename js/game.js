@@ -3,7 +3,7 @@
 // State management, game logic, save/load
 // ============================================================
 
-import { UPGRADES, SHOPS, NEWS, ACHIEVEMENTS, ROSSO_MESSAGES, COMITATO_ACTIONS, CARTE_AZIONE } from './data.js';
+import { UPGRADES, SHOPS, NEWS, ACHIEVEMENTS, ROSSO_MESSAGES, COMITATO_ACTIONS, CARTE_AZIONE, SFIDE, TITOLI } from './data.js';
 
 // ----- Initial State -----
 function createInitialState() {
@@ -47,8 +47,16 @@ function createInitialState() {
     // Carte Azione
     lastCartaTime: 0,
     carteSeen: 0,
-    // Monumenti scoperti (primo click = +1 vitalita')
+    // Monumenti scoperti
     monumentiScoperti: [],
+    // Tracking per sfide
+    _maxPressione: 0,
+    _maxCombo: 0,
+    _comitatoRicevuto: 0,
+    // News log
+    newsLog: [],
+    // Sfide assegnate questa partita (3 random)
+    sfideAssegnate: [],
     // Bonus temporanei
     multeBonus: 1,
     multeBonusFine: 0,
@@ -85,7 +93,7 @@ export function getUpgradeCost(upgradeId) {
 
 // ----- Sagra Cost -----
 export function getSagraCost() {
-  return Math.floor(100 * (1 + state.sagreOrganizzate * 0.5));
+  return 100; // Costo fisso per incentivare l'uso
 }
 
 // ----- MPS Calculation -----
@@ -122,6 +130,8 @@ export function doClick() {
   else if (state.comboCount >= 5) { comboMultiplier = 2; comboLevel = 2; }
   else if (state.comboCount >= 3) { comboLevel = 1; }
 
+  if (comboMultiplier > state._maxCombo) state._maxCombo = comboMultiplier;
+
   const guadagno = 5 * comboMultiplier;
   state.cassa += guadagno;
   state.cassaTotale += guadagno;
@@ -140,6 +150,11 @@ export function buyUpgrade(upgradeId) {
   state.cassa -= cost;
   state.upgrades[upgradeId] = (state.upgrades[upgradeId] || 0) + 1;
   recalcMPS();
+
+  // Pressione salta ad ogni upgrade acquistato
+  const tier = UPGRADES.findIndex(u => u.id === upgradeId);
+  state.pressione = Math.min(100, state.pressione + 3 + tier * 2);
+
   return true;
 }
 
@@ -415,6 +430,7 @@ function checkComitato(now) {
   // Pressione increases with MPS
   if (state.multePerSecondo > 0) {
     state.pressione = Math.min(100, state.pressione + state.multePerSecondo * 0.0003);
+    if (state.pressione > state._maxPressione) state._maxPressione = state.pressione;
   }
   // Natural decay
   state.pressione = Math.max(0, state.pressione - 0.01);
@@ -463,6 +479,7 @@ export function riceviComitato() {
   if (state.gameOver) return false;
   state.pressione = Math.max(0, state.pressione - 20);
   state.blockClicksFine = Date.now() + 10000;
+  state._comitatoRicevuto++;
   return true;
 }
 
@@ -621,4 +638,66 @@ export function getEndStats() {
     hasAlternateEnding: state.sagreOrganizzate >= 3,
     score: calcScore(),
   };
+}
+
+// ----- Sfide -----
+export function assignSfide() {
+  const shuffled = [...SFIDE].sort(() => Math.random() - 0.5);
+  state.sfideAssegnate = shuffled.slice(0, 3).map(s => s.id);
+}
+
+export function checkSfide() {
+  return state.sfideAssegnate.map(id => {
+    const sfida = SFIDE.find(s => s.id === id);
+    if (!sfida) return null;
+    return { ...sfida, completata: sfida.check(state) };
+  }).filter(Boolean);
+}
+
+// ----- News Log -----
+export function addNewsLog(text) {
+  state.newsLog.push(text);
+  if (state.newsLog.length > 50) state.newsLog.shift();
+}
+
+// ----- Profilo Persistente -----
+const PROFILE_KEY = 'multopoli_profile';
+
+function loadProfile() {
+  try {
+    return JSON.parse(localStorage.getItem(PROFILE_KEY)) || createProfile();
+  } catch { return createProfile(); }
+}
+
+function createProfile() {
+  return { partite: 0, bestScore: 0, allAchievements: [], sagreTotali: 0, comitatoRicevutoTotale: 0, monumentiTotali: 0, mediaVitalitaFinale: 50, sfideCompletate: [] };
+}
+
+export function getProfile() {
+  return loadProfile();
+}
+
+export function updateProfile() {
+  const p = loadProfile();
+  p.partite++;
+  const score = calcScore();
+  if (score > p.bestScore) p.bestScore = score;
+  state.achievementsSbloccati.forEach(a => { if (!p.allAchievements.includes(a)) p.allAchievements.push(a); });
+  p.sagreTotali += state.sagreOrganizzate;
+  p.comitatoRicevutoTotale += state._comitatoRicevuto;
+  p.monumentiTotali = Math.max(p.monumentiTotali, state.monumentiScoperti.length);
+  p.mediaVitalitaFinale = Math.round((p.mediaVitalitaFinale * (p.partite - 1) + state.vitalita) / p.partite);
+  // Check sfide completate
+  const sfide = checkSfide();
+  sfide.forEach(s => { if (s.completata && !p.sfideCompletate.includes(s.id)) p.sfideCompletate.push(s.id); });
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+  return p;
+}
+
+export function getPlayerTitle() {
+  const p = loadProfile();
+  for (const t of TITOLI) {
+    if (t.cond(p)) return t.nome;
+  }
+  return 'Novizio';
 }

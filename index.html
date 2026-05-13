@@ -80,7 +80,12 @@
           <span id="hud-pressione" class="hud-value-small">0</span>
         </div>
       </div>
+      <div class="hud-item hud-negozi">
+        <span class="hud-icon">&#x1F3EA;</span>
+        <span id="hud-negozi" class="hud-value-small">10/10</span>
+      </div>
       <button id="btn-achievements" class="hud-btn" aria-label="Achievement">&#x1F3C6;</button>
+      <button id="btn-newslog" class="hud-btn" aria-label="News log">&#x1F4F0;</button>
     </div>
 
     <!-- Main Content -->
@@ -198,6 +203,15 @@
       </div>
     </div>
 
+    <!-- News Log Panel -->
+    <div id="newslog-panel">
+      <div class="newslog-header">
+        <h2>Cronaca del Paese</h2>
+        <button id="newslog-close" class="ach-close">&times;</button>
+      </div>
+      <div id="newslog-list" class="newslog-list"></div>
+    </div>
+
     <!-- Achievement Panel -->
     <div id="achievement-panel">
       <div class="ach-panel-header">
@@ -221,6 +235,8 @@
       <div class="end-trophy">&#x1F3C6;</div>
       <h1 id="end-title" class="end-title">HAI VINTO</h1>
       <div id="end-stats" class="end-stats"></div>
+      <div id="end-sfide" class="end-sfide"></div>
+      <div id="end-profile" class="end-profile"></div>
       <blockquote id="end-quote" class="end-quote">
         "Ma le casse comunali non sono mai state cosi piene."
       </blockquote>
