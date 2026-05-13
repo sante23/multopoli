@@ -303,6 +303,41 @@ export const CARTE_AZIONE = [
   },
 ];
 
+// ============================================================
+// MONUMENTI — Schede storiche cliccabili
+// ============================================================
+
+export const MONUMENTI = [
+  {
+    id: 'torre',
+    nome: 'Torre di Drogone',
+    anno: '1048',
+    storia: 'Costruita da Drogone d\'Altavilla, primo Conte normanno di Puglia, intorno al 1048. Alta 22 metri, sorge su una motta artificiale — il tipico sistema difensivo normanno. Suo fratello Roberto il Guiscardo fece di San Marco la capitale del suo Contado. Da qui parti\' la conquista normanna del Sud Italia. Ha quasi 1000 anni e ha visto passare re, terremoti, guerre. E\' ancora in piedi.',
+    curiosita: 'Il nome "Guiscardo" significa "l\'astuto" in normanno antico. Roberto era famoso per i suoi stratagemmi in battaglia — una volta fece finta di essere morto per sorprendere i nemici.',
+  },
+  {
+    id: 'fontana',
+    nome: 'Fontana di Sichelgaita',
+    anno: 'XI sec.',
+    storia: 'Dedicata a Sichelgaita di Salerno, principessa longobarda e seconda moglie di Roberto il Guiscardo. Non era una moglie decorativa: combatteva in armatura accanto al marito. Nella battaglia di Durazzo (1081) rallento\' la ritirata dei normanni insultando i soldati in fuga. Anna Comnena, storica bizantina, la descrisse come "una seconda Atena".',
+    curiosita: 'La leggenda dice che chi pronuncia il nome di Sichelgaita a San Marco sente un soffio di vento freddo sulla pelle. Anche d\'estate. Nel gioco, il suo spirito appare ogni tanto e regala vitalita\'.',
+  },
+  {
+    id: 'convento',
+    nome: 'Convento dei Riformati',
+    anno: '1429',
+    storia: 'Convento francescano che nel 1429 ospito\' San Francesco da Paola, allora ragazzo di soli 13 anni. Visse per un anno in una piccola cella, oggi chiamata "La Benedetta", in preghiera e penitenza. Da qui parti\' per fondare l\'Ordine dei Minimi, diventando il santo patrono della Calabria e della gente di mare.',
+    curiosita: 'Francesco arrivo\' a San Marco a piedi da Paola, attraversando le montagne della Catena Costiera. Aveva 13 anni e camminava scalzo. Oggi quel percorso e\' un sentiero escursionistico di 60 km.',
+  },
+  {
+    id: 'cattedrale',
+    nome: 'Cattedrale di San Nicola',
+    anno: 'XI sec.',
+    storia: 'Cattedrale normanna dell\'XI secolo, voluta da Roberto il Guiscardo. Conserva un portale scolpito e capitelli romanici unici in Calabria. Per secoli fu il centro religioso di un\'ampia diocesi. Il campanile domina lo skyline del borgo ed e\' visibile da tutta la valle del Crati.',
+    curiosita: 'Il nome "Argentano" potrebbe derivare da antiche miniere d\'argento nella zona, oppure dal fiume Argentino che scorre nelle vicinanze. San Marco fu sede vescovile dal 1000 circa fino alla fusione con la diocesi di Scalea.',
+  },
+];
+
 // Car colors for visual variety
 export const CAR_COLORS = [
   '#C0392B', '#2980B9', '#27AE60', '#F39C12', '#8E44AD',

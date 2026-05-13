@@ -3,7 +3,7 @@
 // DOM updates, animations, visual degradation
 // ============================================================
 
-import { UPGRADES, SHOPS, PIAZZAS, CAR_COLORS, ACHIEVEMENTS } from './data.js';
+import { UPGRADES, SHOPS, PIAZZAS, CAR_COLORS, ACHIEVEMENTS, MONUMENTI } from './data.js';
 import { getState, getUpgradeCost, getSagraCost, getPhase, getEndStats, calcScore } from './game.js';
 
 // ----- Cached DOM refs -----
@@ -64,8 +64,9 @@ export function buildTownMap() {
 
   // Torre di Drogone
   const torre = document.createElement('div');
-  torre.className = 'landmark torre';
+  torre.className = 'landmark torre landmark-clickable';
   torre.id = 'torre-drogone';
+  torre.dataset.monumento = 'torre';
   torre.innerHTML = `
     <div class="torre-structure">
       <div class="torre-top"></div>
@@ -140,17 +141,21 @@ export function buildTownMap() {
     }
   });
 
-  // Bottom landmarks
+  // Bottom landmarks — all clickable for historical info
   const bottom = document.createElement('div');
   bottom.className = 'bottom-landmarks';
   bottom.innerHTML = `
-    <div class="landmark fontana">
+    <div class="landmark fontana landmark-clickable" data-monumento="fontana">
       <div class="fontana-body"></div>
       <span class="landmark-label">Fontana di Sichelgaita</span>
     </div>
-    <div class="landmark convento">
+    <div class="landmark convento landmark-clickable" data-monumento="convento">
       <div class="convento-body"></div>
       <span class="landmark-label">Convento dei Riformati</span>
+    </div>
+    <div class="landmark cattedrale landmark-clickable" data-monumento="cattedrale">
+      <div class="cattedrale-body"></div>
+      <span class="landmark-label">Cattedrale di S. Nicola</span>
     </div>
   `;
   map.appendChild(bottom);
@@ -316,6 +321,9 @@ export function updateHUD() {
     if (p > 80) presEl.style.backgroundColor = '#E74C3C';
     else if (p > 50) presEl.style.backgroundColor = '#F39C12';
     else presEl.style.backgroundColor = '#8B5CF6';
+    // Pulse above 50%
+    if (p > 50) presEl.classList.add('pulsing');
+    else presEl.classList.remove('pulsing');
   }
 }
 
@@ -840,4 +848,21 @@ function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str;
   return div.innerHTML;
+}
+
+// ----- Monumento Info Panel -----
+export function showMonumentoPanel(monumento, isNew) {
+  const panel = document.getElementById('monumento-panel');
+  document.getElementById('monumento-nome').textContent = monumento.nome;
+  document.getElementById('monumento-anno').textContent = monumento.anno;
+  document.getElementById('monumento-storia').textContent = monumento.storia;
+  document.getElementById('monumento-curiosita').textContent = monumento.curiosita;
+  const bonusEl = document.getElementById('monumento-bonus');
+  bonusEl.textContent = isNew ? '+1 vitalita! Monumento scoperto.' : '';
+  bonusEl.className = 'monumento-bonus' + (isNew ? ' monumento-bonus-active' : '');
+  panel.classList.add('active');
+}
+
+export function hideMonumentoPanel() {
+  document.getElementById('monumento-panel').classList.remove('active');
 }

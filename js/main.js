@@ -6,7 +6,8 @@
 import {
   getState, resetState, tick, doClick, buyUpgrade, organizzaSagra,
   loadGame, saveGame, hasSave, recalcMPS, applyEventChoice,
-  riceviComitato, applyComitatoAction, applyCartaChoice, calcScore
+  riceviComitato, applyComitatoAction, applyCartaChoice, calcScore,
+  scopriMonumento
 } from './game.js';
 
 import {
@@ -18,8 +19,11 @@ import {
   applySavedState, showCombo, screenShake, spawnParticles,
   showClosureOverlay, showRandomEvent, updateVigili,
   toggleAchievementPanel, showRossoMessage, showComitatoAction,
-  showCarta, fetchLeaderboard, submitScore, renderLeaderboard
+  showCarta, fetchLeaderboard, submitScore, renderLeaderboard,
+  showMonumentoPanel, hideMonumentoPanel
 } from './render.js';
+
+import { MONUMENTI } from './data.js';
 
 import {
   playClick, playCoin, playCombo, playSaracinesca, playAchievement,
@@ -72,14 +76,19 @@ function setupGlobalEvents() {
   document.getElementById('btn-achievements').addEventListener('click', toggleAchievementPanel);
   document.getElementById('ach-close').addEventListener('click', toggleAchievementPanel);
 
+  // Monumento panel close
+  document.getElementById('monumento-close').addEventListener('click', hideMonumentoPanel);
+
   // Game event delegation
   document.getElementById('town-map').addEventListener('click', (e) => {
-    const car = e.target.closest('.car');
-    if (!car) {
-      const torre = e.target.closest('.torre');
-      if (torre) handleTorreClick();
+    // Check monument click first
+    const landmark = e.target.closest('.landmark-clickable');
+    if (landmark && landmark.dataset.monumento) {
+      handleMonumentoClick(landmark.dataset.monumento);
       return;
     }
+    const car = e.target.closest('.car');
+    if (!car) return;
     handleCarClick(car);
   });
 
@@ -187,12 +196,24 @@ function handleRiceviComitato() {
   updateHUD();
 }
 
-function handleTorreClick() {
-  const state = getState();
-  state.clicksSuTorre++;
-  if (state.clicksSuTorre >= 50) {
-    showDrogoneView();
-    state.clicksSuTorre = 0;
+function handleMonumentoClick(monumentoId) {
+  const monumento = MONUMENTI.find(m => m.id === monumentoId);
+  if (!monumento) return;
+  const isNew = scopriMonumento(monumentoId);
+  if (isNew) {
+    playAchievement();
+    updateHUD();
+  }
+  showMonumentoPanel(monumento, isNew);
+
+  // Torre easter egg still works (counts behind the scenes)
+  if (monumentoId === 'torre') {
+    const state = getState();
+    state.clicksSuTorre++;
+    if (state.clicksSuTorre >= 50) {
+      showDrogoneView();
+      state.clicksSuTorre = 0;
+    }
   }
 }
 
@@ -314,9 +335,10 @@ function stopGameLoop() {
   if (renderFrame) cancelAnimationFrame(renderFrame);
 }
 
-// ----- Closure queue -----
+// ----- Closure queue (with 5s cooldown — no other popups during closures) -----
 let closureQueue = [];
 let closureActive = false;
+let closureCooldownUntil = 0;
 
 function queueClosure(shop) {
   closureQueue.push(shop);
@@ -324,13 +346,21 @@ function queueClosure(shop) {
 }
 
 function processNextClosure() {
-  if (closureQueue.length === 0) { closureActive = false; return; }
+  if (closureQueue.length === 0) {
+    closureActive = false;
+    closureCooldownUntil = Date.now() + 5000; // 5s cooldown after last closure
+    return;
+  }
   closureActive = true;
   const shop = closureQueue.shift();
   playSaracinesca();
   animateShopClosure(shop);
   showClosureOverlay(shop);
   setTimeout(() => processNextClosure(), 4000);
+}
+
+function isClosureCooldown() {
+  return closureActive || Date.now() < closureCooldownUntil;
 }
 
 function gameTick() {
@@ -359,11 +389,11 @@ function gameTick() {
   }
   if (result.rossoMsg) showRossoMessage(result.rossoMsg);
 
-  // Random events
-  if (result.randomEvent && !closureActive) handleRandomEvent(result.randomEvent);
+  // Random events (respect closure cooldown)
+  if (result.randomEvent && !isClosureCooldown()) handleRandomEvent(result.randomEvent);
 
-  // Carte azione
-  if (result.carta && !closureActive && !currentEvent) handleCarta(result.carta);
+  // Carte azione (respect closure cooldown)
+  if (result.carta && !isClosureCooldown() && !currentEvent) handleCarta(result.carta);
 
   updateUpgrades();
   updatePhaseVisuals();

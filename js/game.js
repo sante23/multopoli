@@ -47,6 +47,8 @@ function createInitialState() {
     // Carte Azione
     lastCartaTime: 0,
     carteSeen: 0,
+    // Monumenti scoperti (primo click = +1 vitalita')
+    monumentiScoperti: [],
     // Bonus temporanei
     multeBonus: 1,
     multeBonusFine: 0,
@@ -398,6 +400,14 @@ function checkSichelgaita(now) {
   state.vitalita = Math.min(100, state.vitalita + 2);
   state.sichelgaitaVista = true;
   return true;
+}
+
+// ----- Monumenti -----
+export function scopriMonumento(id) {
+  if (state.monumentiScoperti.includes(id)) return false;
+  state.monumentiScoperti.push(id);
+  state.vitalita = Math.min(100, state.vitalita + 1);
+  return true; // primo click, bonus vitalita'
 }
 
 // ----- Comitato Pressione -----

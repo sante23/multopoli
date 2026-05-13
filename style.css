@@ -1467,13 +1467,62 @@ html, body {
   background: #555;
 }
 
-.phase-4 .fontana-body {
-  background: #777;
-  border-color: #555;
+/* Landmarks RESIST desaturation — they survive the town's death */
+.landmark-clickable {
+  cursor: pointer;
+  transition: transform 0.2s, filter 0.2s;
+  filter: saturate(1) brightness(1);
+  animation: landmarkGlow 3s ease-in-out infinite;
+}
+.landmark-clickable:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+.phase-2 .landmark-clickable,
+.phase-3 .landmark-clickable,
+.phase-4 .landmark-clickable {
+  filter: saturate(3) brightness(1.2); /* Stand out against gray */
+}
+.phase-4 .landmark-label {
+  color: var(--stone);
+  filter: saturate(5);
 }
 
-.phase-4 .landmark-label {
-  color: #555;
+@keyframes landmarkGlow {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.1); }
+}
+
+/* Cattedrale */
+.cattedrale-body {
+  width: 35px;
+  height: 40px;
+  background: var(--plaster-light);
+  border: 2px solid var(--stone);
+  border-radius: 2px;
+  position: relative;
+}
+.cattedrale-body::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 21px solid transparent;
+  border-right: 21px solid transparent;
+  border-bottom: 12px solid #A0522D;
+}
+.cattedrale-body::after {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 10px;
+  background: #8B4513;
 }
 
 /* ----- Scrollbar ----- */
@@ -2141,6 +2190,141 @@ html, body {
 }
 .stat-score .stat-label { color: #FFD700; font-weight: 700; }
 .stat-score .stat-value { color: #FFD700; font-size: 1.1rem; }
+
+/* ----- MONUMENTO INFO PANEL ----- */
+#monumento-panel {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0);
+  z-index: 65;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: background 0.3s;
+}
+#monumento-panel.active {
+  background: rgba(0,0,0,0.7);
+  pointer-events: auto;
+}
+.monumento-card {
+  background: linear-gradient(135deg, #FAF5EF 0%, #F0E6D6 100%);
+  border-radius: 14px;
+  padding: 1.8rem;
+  max-width: 420px;
+  width: 92%;
+  transform: translateY(30px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  border-top: 4px solid #A0522D;
+  position: relative;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+#monumento-panel.active .monumento-card {
+  transform: translateY(0);
+  opacity: 1;
+}
+.monumento-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #9CA3AF;
+  cursor: pointer;
+}
+.monumento-close:hover { color: #2D2D2D; }
+.monumento-nome {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #A0522D;
+  margin-bottom: 0.2rem;
+}
+.monumento-anno {
+  font-size: 0.75rem;
+  color: #8B6F47;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+.monumento-storia {
+  font-size: 0.85rem;
+  color: #2D2D2D;
+  line-height: 1.65;
+  margin-bottom: 1rem;
+}
+.monumento-curiosita-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #8B6F47;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+.monumento-curiosita {
+  font-size: 0.8rem;
+  color: #6B7280;
+  font-style: italic;
+  line-height: 1.5;
+  padding: 0.6rem;
+  background: rgba(160,82,45,0.06);
+  border-radius: 8px;
+  border-left: 3px solid #A0522D;
+}
+.monumento-bonus {
+  text-align: center;
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  min-height: 1.2em;
+}
+.monumento-bonus-active {
+  color: #27AE60;
+  font-weight: 700;
+  animation: bonusPop 0.4s ease;
+}
+@keyframes bonusPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Tooltip barra comitato */
+.hud-pressione {
+  position: relative;
+}
+.hud-pressione::after {
+  content: 'Pressione del Comitato di Resistenza Paesano';
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26,26,46,0.95);
+  color: #F3F4F6;
+  font-size: 0.55rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 30;
+}
+.hud-pressione:hover::after {
+  opacity: 1;
+}
+
+/* Pressione pulsa sopra 50% */
+@keyframes pressurePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+.hud-bar-pressione.pulsing {
+  animation: pressurePulse 1s ease-in-out infinite;
+}
 
 /* ----- Accessibility: reduce motion ----- */
 @media (prefers-reduced-motion: reduce) {
